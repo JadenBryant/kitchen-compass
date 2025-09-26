@@ -41,16 +41,24 @@
     <Import Project="$(NuGetPackageRoot)microsoft.maui.controls.build.tasks\9.0.82\buildTransitive\net6.0-windows10.0.17763.0\Microsoft.Maui.Controls.Build.Tasks.props" Condition="Exists('$(NuGetPackageRoot)microsoft.maui.controls.build.tasks\9.0.82\buildTransitive\net6.0-windows10.0.17763.0\Microsoft.Maui.Controls.Build.Tasks.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net9.0-android' AND '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgAWSSDK_Core Condition=" '$(PkgAWSSDK_Core)' == '' ">C:\Users\jaden\.nuget\packages\awssdk.core\3.7.100.14</PkgAWSSDK_Core>
+    <PkgAWSSDK_SecurityToken Condition=" '$(PkgAWSSDK_SecurityToken)' == '' ">C:\Users\jaden\.nuget\packages\awssdk.securitytoken\3.7.100.14</PkgAWSSDK_SecurityToken>
     <PkgMicrosoft_NET_ILLink_Tasks Condition=" '$(PkgMicrosoft_NET_ILLink_Tasks)' == '' ">C:\Users\jaden\.nuget\packages\microsoft.net.illink.tasks\9.0.9</PkgMicrosoft_NET_ILLink_Tasks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net9.0-ios' AND '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgAWSSDK_Core Condition=" '$(PkgAWSSDK_Core)' == '' ">C:\Users\jaden\.nuget\packages\awssdk.core\3.7.100.14</PkgAWSSDK_Core>
+    <PkgAWSSDK_SecurityToken Condition=" '$(PkgAWSSDK_SecurityToken)' == '' ">C:\Users\jaden\.nuget\packages\awssdk.securitytoken\3.7.100.14</PkgAWSSDK_SecurityToken>
     <PkgMicrosoft_NET_ILLink_Tasks Condition=" '$(PkgMicrosoft_NET_ILLink_Tasks)' == '' ">C:\Users\jaden\.nuget\packages\microsoft.net.illink.tasks\9.0.9</PkgMicrosoft_NET_ILLink_Tasks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net9.0-maccatalyst' AND '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgAWSSDK_Core Condition=" '$(PkgAWSSDK_Core)' == '' ">C:\Users\jaden\.nuget\packages\awssdk.core\3.7.100.14</PkgAWSSDK_Core>
+    <PkgAWSSDK_SecurityToken Condition=" '$(PkgAWSSDK_SecurityToken)' == '' ">C:\Users\jaden\.nuget\packages\awssdk.securitytoken\3.7.100.14</PkgAWSSDK_SecurityToken>
     <PkgMicrosoft_NET_ILLink_Tasks Condition=" '$(PkgMicrosoft_NET_ILLink_Tasks)' == '' ">C:\Users\jaden\.nuget\packages\microsoft.net.illink.tasks\9.0.9</PkgMicrosoft_NET_ILLink_Tasks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net9.0-windows10.0.19041.0' AND '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgMicrosoft_Web_WebView2 Condition=" '$(PkgMicrosoft_Web_WebView2)' == '' ">C:\Users\jaden\.nuget\packages\microsoft.web.webview2\1.0.3179.45</PkgMicrosoft_Web_WebView2>
     <PkgMicrosoft_WindowsAppSDK Condition=" '$(PkgMicrosoft_WindowsAppSDK)' == '' ">C:\Users\jaden\.nuget\packages\microsoft.windowsappsdk\1.7.250513003</PkgMicrosoft_WindowsAppSDK>
+    <PkgAWSSDK_Core Condition=" '$(PkgAWSSDK_Core)' == '' ">C:\Users\jaden\.nuget\packages\awssdk.core\3.7.100.14</PkgAWSSDK_Core>
+    <PkgAWSSDK_SecurityToken Condition=" '$(PkgAWSSDK_SecurityToken)' == '' ">C:\Users\jaden\.nuget\packages\awssdk.securitytoken\3.7.100.14</PkgAWSSDK_SecurityToken>
   </PropertyGroup>
 </Project>

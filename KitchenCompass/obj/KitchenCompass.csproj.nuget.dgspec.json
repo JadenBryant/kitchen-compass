@@ -75,6 +75,14 @@
               "version": "[9.0.9, )",
               "autoReferenced": true
             },
+            "MongoDB.Bson": {
+              "target": "Package",
+              "version": "[3.5.0, )"
+            },
+            "MongoDB.Driver.Core": {
+              "target": "Package",
+              "version": "[2.30.0, )"
+            },
             "Plugin.Firebase.Auth": {
               "target": "Package",
               "version": "[3.1.1, )"
@@ -117,6 +125,14 @@
               "target": "Package",
               "version": "[9.0.9, )",
               "autoReferenced": true
+            },
+            "MongoDB.Bson": {
+              "target": "Package",
+              "version": "[3.5.0, )"
+            },
+            "MongoDB.Driver.Core": {
+              "target": "Package",
+              "version": "[2.30.0, )"
             },
             "Plugin.Firebase.Auth": {
               "target": "Package",
@@ -161,6 +177,14 @@
               "version": "[9.0.9, )",
               "autoReferenced": true
             },
+            "MongoDB.Bson": {
+              "target": "Package",
+              "version": "[3.5.0, )"
+            },
+            "MongoDB.Driver.Core": {
+              "target": "Package",
+              "version": "[2.30.0, )"
+            },
             "Plugin.Firebase.Auth": {
               "target": "Package",
               "version": "[3.1.1, )"
@@ -198,6 +222,14 @@
             "Microsoft.Maui.Controls": {
               "target": "Package",
               "version": "[9.0.82, )"
+            },
+            "MongoDB.Bson": {
+              "target": "Package",
+              "version": "[3.5.0, )"
+            },
+            "MongoDB.Driver.Core": {
+              "target": "Package",
+              "version": "[2.30.0, )"
             },
             "Plugin.Firebase.Auth": {
               "target": "Package",
