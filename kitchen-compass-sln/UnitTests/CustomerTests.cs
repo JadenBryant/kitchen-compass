@@ -15,7 +15,7 @@ public class BackendTests
     public void Given_MenuItemWithNoModifications_When_AddModificationCalled_Then_ModificationIsAddedToItemInstance()
     {
         //Given
-        MenuItem item = new MenuItem("id1");
+        MenuItem item = new MenuItem("TestItem", 0);
 
         //When
         item.AddModification("No Mushrooms");

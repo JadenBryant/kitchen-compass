@@ -16,7 +16,7 @@ public class Tests
         string menuType = "menutest";
         string menuId = "1";
 
-        MenuItem testItem = new MenuItem("testId");
+        MenuItem testItem = new MenuItem("TestItem", 0);
         
         Menu testMenu = new Menu(menuType, menuId);
         testMenu.AddItem(testItem);
