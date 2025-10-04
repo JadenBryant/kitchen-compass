@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CustomerFrontend.MenuItemDetails">
+    <ScrollView>
+        <VerticalStackLayout
+            Margin="50"
+            Padding="30,0"
+            Spacing="10">
+            <Label
+                Text="Cheeseburger"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1"/>
+            <Label
+                Text="$2.99 ⋅ 490 Calories"
+                HorizontalTextAlignment="Center"/>
+            <Image
+                Source="cheeseburger.png"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="burger with cheese" 
+                Margin="20"/>
+            <Label Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tempus lorem et felis porttitor, at volutpat nibh ultricies. Integer a vestibulum ligula. Fusce at velit efficitur, varius quam eu, convallis urna. Nullam eu purus a dolor dapibus hendrerit. Sed eget ligula libero. Duis suscipit urna eu odio varius, ac sagittis justo auctor. Pellentesque placerat mi in viverra facilisis."
+                   LineBreakMode="WordWrap"
+                   HorizontalOptions="Fill"/>
+            <Button
+                x:Name="CounterBtn"
+                Text="Add to Cart" 
+                Clicked="WriteBurger"
+                HorizontalOptions="Fill" />
+        </VerticalStackLayout>
+        
+        
+    </ScrollView>
+</ContentPage>
