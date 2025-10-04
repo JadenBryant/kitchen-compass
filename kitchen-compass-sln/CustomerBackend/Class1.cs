@@ -1,4 +1,7 @@
-﻿namespace CustomerBackend;
+﻿namespace CustomerBackend
+{
+    public class Class1
+    {
 
-public class Class1 {
+    }
 }
