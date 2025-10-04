@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CustomerBackend
 {
-    public class MenuItem
+    public class MenuItem1
     {
         public int Price { get; set; }
     }
