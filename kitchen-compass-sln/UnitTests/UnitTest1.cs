@@ -1,15 +1,26 @@
-﻿namespace UnitTests;
+﻿using CustomerBackend;
+
+namespace UnitTests;
 
 public class Tests
 {
     [SetUp]
     public void Setup()
     {
+        
     }
 
     [Test]
-    public void Test1()
+    public void TestMenu()
     {
-        Assert.Pass();
+        string menuType = "menutest";
+        string menuId = "1";
+
+        MenuItem testItem = new MenuItem("TestItem", 0);
+        
+        Menu testMenu = new Menu(menuType, menuId);
+        testMenu.AddItem(testItem);
+
+        Assert.That(testMenu.Items.Count() == 1);
     }
 }
