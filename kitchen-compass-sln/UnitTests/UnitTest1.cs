@@ -1,5 +1,4 @@
 ﻿using CustomerBackend;
-using CustomerBackend.Menu;
 
 namespace UnitTests;
 
@@ -17,7 +16,7 @@ public class Tests
         string menuType = "menutest";
         string menuId = "1";
 
-        MenuItem testItem = new MenuItem();
+        MenuItem testItem = new MenuItem("testId");
         
         Menu testMenu = new Menu(menuType, menuId);
         testMenu.AddItem(testItem);
