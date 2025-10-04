@@ -13,7 +13,7 @@ namespace UnitTests
         public void Setup()
         {
             _cart = new ShoppingCart();
-            _pizza = new MenuItem("Pizza", 10.00m);
+            _pizza = new MenuItem("Pizza", 10);
         }
 
         // Test for adding a new item to the cart
@@ -46,7 +46,7 @@ namespace UnitTests
         [Test]
         public void ClearCart_Test()
         {
-            var burger = new MenuItem("Burger", 5.00m);
+            var burger = new MenuItem("Burger", 5);
             _cart.AddItem(_pizza, 2);  // Adding 2 pizzas
             _cart.AddItem(burger, 3);  // Adding 3 burgers
             _cart.ClearCart();         // Clear the cart

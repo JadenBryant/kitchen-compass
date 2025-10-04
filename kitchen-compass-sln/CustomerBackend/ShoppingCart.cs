@@ -6,14 +6,6 @@ using System.Threading.Tasks;
 
 namespace CustomerBackend
 {
-    // Interface defining the structure of a MenuItem
-    public interface IMenuItem
-    {
-        Guid Id { get; }        // Unique identifier for each menu item
-        string Name { get; }     // Name of the menu item
-        decimal Price { get; }   // Price of the menu item
-    }
-
     // CartLine represents an individual item and its quantity in the shopping cart
     internal class CartLine
     {
@@ -21,7 +13,7 @@ namespace CustomerBackend
         public int Quantity { get; set; }  // Quantity of this item in the cart
 
         // LineTotal calculates the total price for the item based on its quantity
-        public decimal LineTotal => Item.Price * Quantity;
+        public float LineTotal => Item.Price * Quantity;
 
         // Constructor to initialize the CartLine with the item and quantity
         public CartLine(IMenuItem item, int quantity)
@@ -39,7 +31,7 @@ namespace CustomerBackend
         public Guid Id { get; } = Guid.NewGuid();  // Unique identifier for the shopping cart
 
         // Subtotal calculates the total cost of all items
-        public decimal Subtotal => _cartLines.Sum(line => line.LineTotal);
+        public float Subtotal => _cartLines.Sum(line => line.LineTotal);
 
         // Method to add an item to the cart, if it already exists, it updates the quantity
         public void AddItem(IMenuItem item, int quantity)
@@ -77,28 +69,6 @@ namespace CustomerBackend
         {
             // Simply clears all CartLine objects from the cart
             _cartLines.Clear();
-        }
-
-        // Helper method to round values to two decimal places for display
-        private decimal TwoDecimalPlaces(decimal value)
-        {
-            return Math.Round(value, 2);
-        }
-    }
-
-    // A simple implementation of the IMenuItem interface to represent menu items
-    public class MenuItem : IMenuItem
-    {
-        public Guid Id { get; }  // Unique identifier for the menu item
-        public string Name { get; }  // Name of the item (e.g., "Pizza", "Burger")
-        public decimal Price { get; }  // Price of the menu item
-
-        // Constructor to initialize the menu item with a name and price
-        public MenuItem(string name, decimal price)
-        {
-            Id = Guid.NewGuid();  // Automatically generate a unique ID
-            Name = name;          // Set the name of the item
-            Price = price;        // Set the price of the item
         }
     }
 }
