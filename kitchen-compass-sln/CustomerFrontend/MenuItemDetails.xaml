@@ -27,7 +27,7 @@
             <Button
                 x:Name="CounterBtn"
                 Text="Add to Cart" 
-                Clicked="WriteBurger"
+                Clicked="AddToCart"
                 HorizontalOptions="Fill" />
         </VerticalStackLayout>
         

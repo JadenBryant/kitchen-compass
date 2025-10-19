@@ -11,7 +11,7 @@ public partial class MenuItemDetails : ContentPage {
         InitializeComponent();
     }
 
-    private void WriteBurger(object sender, EventArgs e) {
+    private void AddToCart(object sender, EventArgs e) {
         Console.WriteLine("Burger button was clicked.");
     }
 }
