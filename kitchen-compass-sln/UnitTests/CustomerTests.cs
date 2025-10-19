@@ -1,6 +1,5 @@
 ﻿using CustomerBackend;
 using NUnit;
-using Newtonsoft;
 
 namespace UnitTests;
 
