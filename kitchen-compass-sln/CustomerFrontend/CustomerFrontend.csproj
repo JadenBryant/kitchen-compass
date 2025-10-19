@@ -3,7 +3,7 @@
     <!-- General configurations -->
     <PropertyGroup>
         <!-- Project targets Android, iOS, MacCatalyst, and Windows -->
-        <TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks> 
+        <TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
         <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 
         <!-- Note for MacCatalyst:
@@ -40,51 +40,63 @@
     <!-- Resources: icons, splash screens, images, fonts, raw assets -->
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4"/>
 
         <!-- Splash Screen -->
-        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128"/>
 
         <!-- Images -->
-        <MauiImage Include="Resources\Images\*" />
-        <MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+        <MauiImage Include="Resources\Images\*"/>
+        <MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185"/>
 
         <!-- Custom Fonts -->
-        <MauiFont Include="Resources\Fonts\*" />
+        <MauiFont Include="Resources\Fonts\*"/>
 
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
-        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)"/>
     </ItemGroup>
 
     <!-- Package references / dependencies -->
     <ItemGroup>
-        <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
-        <PackageReference Include="Plugin.Firebase.Auth" Version="3.1.1" />
-        <PackageReference Include="Plugin.Firebase.Core" Version="3.1.1" />
+        <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)"/>
+        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1"/>
+        <PackageReference Include="Plugin.Firebase.Auth" Version="3.1.1"/>
+        <PackageReference Include="Plugin.Firebase.Core" Version="3.1.1"/>
     </ItemGroup>
 
     <!-- Platform-specific configurations -->
     <!-- Android-specific package references and resources -->
-    <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
-        <!-- Force KTX to 1.3.0.1 for Android only, aligning with the JVM package -->
-        <PackageReference Include="Xamarin.AndroidX.Collection.Ktx" Version="1.3.0.1" />
-        <PackageReference Include="Xamarin.Firebase.Common" Version="120.4.2" />
-    </ItemGroup>
+
+    <!-- May not be required - Plugin.Firebase should handle this -->
+    <!--    <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">-->
+    <!--        &lt;!&ndash; Core AndroidX dependency &ndash;&gt;-->
+    <!--        &lt;!&ndash; Force KTX to 1.3.0.1 for Android only, aligning with the JVM package &ndash;&gt;-->
+    <!--        <PackageReference Include="Xamarin.AndroidX.Collection.Ktx" Version="1.3.0.1" />-->
+
+    <!--        &lt;!&ndash; Core Firebase binding &ndash;&gt;-->
+    <!--        <PackageReference Include="Xamarin.Firebase.Common" Version="120.4.2" />-->
+
+    <!--        &lt;!&ndash; Firebase Auth binding &ndash;&gt;-->
+    <!--        <PackageReference Include="Xamarin.Firebase.Auth" Version="121.1.0" />-->
+    <!--    </ItemGroup>-->
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
-        <GoogleServicesJson Include="Platforms/Android/google-services.json" />
+        <GoogleServicesJson Include="Platforms/Android/google-services.json"/>
     </ItemGroup>
 
     <!-- iOS-specific resources -->
     <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">
-        <BundleResource Include="Platforms/iOS/GoogleService-Info.plist" />
+        <PackageReference Include="AdamE.Firebase.iOS.Auth" Version="10.24.0.2"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">
+        <BundleResource Include="Platforms/iOS/GoogleService-Info.plist"/>
     </ItemGroup>
 
     <!-- Link to backend project -->
     <ItemGroup>
-      <ProjectReference Include="..\CustomerBackend\CustomerBackend.csproj" />
+        <ProjectReference Include="..\CustomerBackend\CustomerBackend.csproj"/>
     </ItemGroup>
 
 </Project>
