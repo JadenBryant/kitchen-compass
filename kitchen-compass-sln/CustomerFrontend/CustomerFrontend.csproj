@@ -72,17 +72,17 @@
         <PackageReference Include="Plugin.Firebase.Auth" Version="3.1.1"/>
         <PackageReference Include="Plugin.Firebase.Core" Version="3.1.1"/>
     </ItemGroup>
-    
+
     <!-- Android -->
     <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
         <GoogleServicesJson Include="Platforms/Android/google-services.json"/>
-        <PackageReference Include="Xamarin.AndroidX.Core" Version="1.15.0.1" />
-        <PackageReference Include="Xamarin.AndroidX.Collection" Version="1.4.5.1" />
-        <PackageReference Include="Xamarin.AndroidX.Collection.Ktx" Version="1.4.5.1" />
-        <PackageReference Include="Xamarin.AndroidX.Activity.Ktx" Version="1.9.3.1" />
-        <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.8.0.7" />
-        <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData.Core" Version="2.8.7.1" />
-        <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData.Core.Ktx" Version="2.8.7.1" />
+        <PackageReference Include="Xamarin.AndroidX.Core" Version="1.15.0.1"/>
+        <PackageReference Include="Xamarin.AndroidX.Collection" Version="1.4.5.1"/>
+        <PackageReference Include="Xamarin.AndroidX.Collection.Ktx" Version="1.4.5.1"/>
+        <PackageReference Include="Xamarin.AndroidX.Activity.Ktx" Version="1.9.3.1"/>
+        <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.8.0.7"/>
+        <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData.Core" Version="2.8.7.1"/>
+        <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData.Core.Ktx" Version="2.8.7.1"/>
     </ItemGroup>
 
     <!-- iOS -->
@@ -93,15 +93,19 @@
     <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">
         <CodesignEntitlements>Platforms/iOS/Entitlements.plist</CodesignEntitlements>
     </PropertyGroup>
+
+    <!-- iOS linker settings to build app on old version of Xcode, works if you're lucky -->
+    <!--    <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">-->
+    <!--        <MtouchLink>SdkOnly</MtouchLink>-->
+    <!--    </PropertyGroup>-->
     <!-- END: Platform-specific configurations -->
 
     <!-- START: Project references -->
 
     <!-- Link to backend project -->
-    <ItemGroup>
-        <ProjectReference Include="..\CustomerBackend\CustomerBackend.csproj"/>
-    </ItemGroup>
-    
+        <ItemGroup>
+            <ProjectReference Include="..\CustomerBackend\CustomerBackend.csproj" />
+        </ItemGroup>
     <!-- END: Project references -->
 
 </Project>
