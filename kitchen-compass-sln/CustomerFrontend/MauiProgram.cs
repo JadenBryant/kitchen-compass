@@ -7,11 +7,10 @@ using Microsoft.Maui.LifecycleEvents;
 using Plugin.Firebase.Auth;
 #endif
 
-
-#if IOS
-using Plugin.Firebase.Core.Platforms.iOS;
-#elif ANDROID
+#if ANDROID
 using Plugin.Firebase.Core.Platforms.Android;
+#elif IOS
+using Plugin.Firebase.Core.Platforms.iOS;
 #endif
 
 public static class MauiProgram {
@@ -30,7 +29,7 @@ public static class MauiProgram {
 
         return builder.Build();
     }
-    
+
 #if ANDROID || IOS
     private static MauiAppBuilder RegisterFirebaseServices(this MauiAppBuilder builder) {
         builder.ConfigureLifecycleEvents(events => {
@@ -40,12 +39,12 @@ public static class MauiProgram {
                 return false;
             }));
 #elif ANDROID
-            events.AddAndroid(android => android.OnCreate((activity, _) =>
-                CrossFirebase.Initialize(activity)));
+            events.AddAndroid(android => android.OnCreate((activity, _) => {
+                CrossFirebase.Initialize(activity);
+            }));
 #endif
         });
 
-        builder.Services.AddSingleton(_ => CrossFirebaseAuth.Current);
         return builder;
     }
 #endif
