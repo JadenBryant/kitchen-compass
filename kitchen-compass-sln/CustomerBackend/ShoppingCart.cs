@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CustomerBackend
 {
     // CartLine represents an individual item and its quantity in the shopping cart
-    internal class CartLine
+    public class CartLine
     {
         public IMenuItem Item { get; }  // The item in the cart
         public int Quantity { get; set; }  // Quantity of this item in the cart
@@ -69,6 +69,11 @@ namespace CustomerBackend
         {
             // Simply clears all CartLine objects from the cart
             _cartLines.Clear();
+        }
+        // Returns a copy of the cart lines (for order creation or display)
+        public IEnumerable<CartLine> GetCartItems()
+        {
+            return _cartLines.ToList();  // returns a copy of the list
         }
     }
 }
