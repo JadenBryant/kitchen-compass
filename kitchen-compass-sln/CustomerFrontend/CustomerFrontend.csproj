@@ -103,9 +103,9 @@
     <!-- START: Project references -->
 
     <!-- Link to backend project -->
-        <ItemGroup>
-            <ProjectReference Include="..\CustomerBackend\CustomerBackend.csproj" />
-        </ItemGroup>
+<!--        <ItemGroup>-->
+<!--            <ProjectReference Include="..\CustomerBackend\CustomerBackend.csproj" />-->
+<!--        </ItemGroup>-->
     <!-- END: Project references -->
 
 </Project>

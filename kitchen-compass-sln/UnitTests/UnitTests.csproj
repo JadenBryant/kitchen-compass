@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CustomerBackend\CustomerBackend.csproj" />
+      <ProjectReference Include="..\CustomerBackend_OLD\CustomerBackend_OLD.csproj" />
     </ItemGroup>
 
     <ItemGroup>
