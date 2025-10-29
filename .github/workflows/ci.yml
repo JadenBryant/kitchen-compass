@@ -18,7 +18,7 @@ jobs:
           global-json-file: kitchen-compass-sln/global.json
 
       - name: Restore dependencies
-        run: dotnet restore ./kitchen-compass-sln/kitchen-compass.sln
+        run: dotnet restore ./kitchen-compass-sln/CustomerBackend
 
       - name: Build backend application
         run: dotnet build ./kitchen-compass-sln/CustomerBackend
