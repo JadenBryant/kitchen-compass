@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+    <!-- START: General configurations -->
     <PropertyGroup>
+        <!-- Project targets Android, iOS, MacCatalyst, and Windows -->
         <TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
         <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
-        <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-        <!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
 
         <!-- Note for MacCatalyst:
         The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
@@ -35,51 +35,77 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
     </PropertyGroup>
+    <!-- END: General configurations -->
 
+    <!-- START: Resources: icons, splash screens, images, fonts, raw assets -->
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4"/>
 
         <!-- Splash Screen -->
-        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128"/>
 
         <!-- Images -->
-        <MauiImage Include="Resources\Images\*" />
-        <MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+        <MauiImage Include="Resources\Images\*"/>
+        <MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185"/>
 
         <!-- Custom Fonts -->
-        <MauiFont Include="Resources\Fonts\*" />
+        <MauiFont Include="Resources\Fonts\*"/>
 
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
-        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)"/>
     </ItemGroup>
-
+    <!-- END: Resources -->
+    
+    <!-- START: Package references / dependencies -->
     <ItemGroup>
-        <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
-        <PackageReference Include="Plugin.Firebase.Auth" Version="3.1.1" />
-        <PackageReference Include="Plugin.Firebase.Core" Version="3.1.1" />
+        <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)"/>
+        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1"/>
+    </ItemGroup>
+    <!-- END: Package references / dependencies -->
+
+    <!-- START: Platform-specific configurations -->
+    <!-- Android + iOS -->
+    <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-ios' OR '$(TargetFramework)' == 'net8.0-android'">
+        <PackageReference Include="Plugin.Firebase.Auth" Version="3.1.1"/>
+        <PackageReference Include="Plugin.Firebase.Core" Version="3.1.1"/>
     </ItemGroup>
 
+    <!-- Android -->
     <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
-        <!-- Force KTX to 1.3.0.1 for Android only, aligning with the JVM package -->
-        <PackageReference Include="Xamarin.AndroidX.Collection.Ktx" Version="1.3.0.1" />
-        <PackageReference Include="Xamarin.Firebase.Common" Version="120.4.2" />
+        <GoogleServicesJson Include="Platforms/Android/google-services.json"/>
+        <PackageReference Include="Xamarin.AndroidX.Core" Version="1.15.0.1"/>
+        <PackageReference Include="Xamarin.AndroidX.Collection" Version="1.4.5.1"/>
+        <PackageReference Include="Xamarin.AndroidX.Collection.Ktx" Version="1.4.5.1"/>
+        <PackageReference Include="Xamarin.AndroidX.Activity.Ktx" Version="1.9.3.1"/>
+        <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.8.0.7"/>
+        <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData.Core" Version="2.8.7.1"/>
+        <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData.Core.Ktx" Version="2.8.7.1"/>
     </ItemGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
-        <GoogleServicesJson Include="Platforms/Android/google-services.json" />
-    </ItemGroup>
-
+    <!-- iOS -->
     <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">
-        <BundleResource Include="Platforms/iOS/GoogleService-Info.plist" />
+        <BundleResource Include="Platforms/iOS/GoogleService-Info.plist"/>
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\CustomerBackend\CustomerBackend.csproj" />
-    </ItemGroup>
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">
+        <CodesignEntitlements>Platforms/iOS/Entitlements.plist</CodesignEntitlements>
+    </PropertyGroup>
+
+    <!-- iOS linker settings to build app on old version of Xcode, works if you're lucky -->
+    <!--    <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">-->
+    <!--        <MtouchLink>SdkOnly</MtouchLink>-->
+    <!--    </PropertyGroup>-->
+    <!-- END: Platform-specific configurations -->
+
+    <!-- START: Project references -->
+
+    <!-- Link to backend project -->
+<!--        <ItemGroup>-->
+<!--            <ProjectReference Include="..\CustomerBackend\CustomerBackend.csproj" />-->
+<!--        </ItemGroup>-->
+    <!-- END: Project references -->
 
 </Project>
