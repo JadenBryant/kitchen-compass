@@ -1,3 +1,4 @@
+using CustomerBackend.Services;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 
@@ -13,8 +14,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Register GoogleCloudStorageService as a singleton for image handling
+builder.Services.AddSingleton<GoogleCloudStorageService>();
+
 var app = builder.Build();
 
+// Display Swagger UI in production
 app.UseSwagger();
 app.UseSwaggerUI();
 
