@@ -15,10 +15,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CustomerBackend_OLD\CustomerBackend_OLD.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
         <Using Include="NUnit.Framework" />
     </ItemGroup>
 

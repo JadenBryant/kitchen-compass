@@ -1,4 +1,4 @@
-using CustomerBackend.Services;
+﻿using CustomerBackend.Services;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 
@@ -6,7 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Initialize Firebase Admin SDK
 var json = Environment.GetEnvironmentVariable("FIREBASE_CREDENTIAL_JSON");
-FirebaseApp.Create(new AppOptions() {
+FirebaseApp.Create(new AppOptions()
+{
     Credential = GoogleCredential.FromJson(json)
 });
 
@@ -16,6 +17,8 @@ builder.Services.AddSwaggerGen();
 
 // Register GoogleCloudStorageService as a singleton for image handling
 builder.Services.AddSingleton<GoogleCloudStorageService>();
+
+builder.Services.AddSingleton<IShoppingCartService, ShoppingCartService>();
 
 var app = builder.Build();
 
@@ -29,3 +32,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+ 
