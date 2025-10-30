@@ -1,13 +1,13 @@
 ﻿services:
   customer-backend:
     build:
-      context: ./kitchen-compass-sln/CustomerBackend
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: ./kitchen-compass-sln/CustomerBackend/Dockerfile
     ports:
       - "8080:8080"
-      - "8081:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - FIREBASE_API_KEY=${FIREBASE_API_KEY}
       - FIREBASE_CREDENTIAL_JSON=${FIREBASE_CREDENTIAL_JSON}
       - PORT=${PORT}
     networks:
