@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CustomerFrontend": {
+      "commandName": "Project",
+      "dotnetRunMessages": true
+    }
+  }
+}
