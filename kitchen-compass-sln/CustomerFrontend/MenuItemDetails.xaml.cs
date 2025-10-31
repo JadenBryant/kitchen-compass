@@ -12,6 +12,6 @@ public partial class MenuItemDetails : ContentPage {
     }
 
     private void AddToCart(object sender, EventArgs e) {
-        Console.WriteLine("Burger button was clicked.");
+        Console.WriteLine("Adding item to cart...");
     }
 }
