@@ -1,5 +1,5 @@
 # Sprint 2 Report
-Video Link: 
+Video Link: https://youtu.be/GM4-06SH5_8
 ## What's New
 * Docker container for backend
 * Backend API deployed to web
