@@ -35,7 +35,6 @@ Here are links to the issues that we completed in this sprint:
 ## Incomplete Issues/User Stories
 Here are links to issues we worked on but did not complete in this sprint:
 * https://github.com/JadenBryant/kitchen-compass/issues/35 - implementation of the authentication API took longer than expected, thus preventing us from hooking it up to the front end and completing the login feature.
-* URL of issue 2 <<One sentence explanation of why issue was not completed>>
 
 ## Code Files for Review
 Please review the following code files, which were actively developed during this
