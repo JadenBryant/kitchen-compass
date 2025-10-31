@@ -21,9 +21,3 @@
       </Content>
     </ItemGroup>
 
- <ItemGroup>
-    <ProjectReference Include="..\CustomerBackend.Domain\CustomerBackend.Domain.csproj" />
-  </ItemGroup>
-</Project>
-
-
