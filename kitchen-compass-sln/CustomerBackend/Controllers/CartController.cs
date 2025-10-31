@@ -4,26 +4,26 @@ using CustomerBackend;
 
 namespace CustomerBackend.Controllers
 {
+    // DTO the API receives
+    public class ItemDto
+    {
+        public Guid Id { get; set; }                 // <-- Guid (matches IMenuItem)
+        public string Name { get; set; } = "";
+        public float Price { get; set; }
+        public int Qty { get; set; }
+
+        // Optional; present to satisfy non-nullable properties on MenuItem
+        public string? Description { get; set; }
+        public string? Ingredients { get; set; }
+        public int? CalorieCount { get; set; }
+    }
+
     [ApiController]
     [Route("api/[controller]")]
     public class CartController : ControllerBase
     {
         private readonly IShoppingCartService _cart;
         public CartController(IShoppingCartService cart) => _cart = cart;
-
-        // DTO the API receives
-        public class ItemDto
-        {
-            public Guid Id { get; set; }                 // <-- Guid (matches IMenuItem)
-            public string Name { get; set; } = "";
-            public float Price { get; set; }
-            public int Qty { get; set; }
-
-            // Optional; present to satisfy non-nullable properties on MenuItem
-            public string? Description { get; set; }
-            public string? Ingredients { get; set; }
-            public int? CalorieCount { get; set; }
-        }
 
         [HttpGet]
         public IActionResult Get()

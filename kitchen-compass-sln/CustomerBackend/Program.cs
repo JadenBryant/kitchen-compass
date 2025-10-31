@@ -19,6 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<GoogleCloudStorageService>();
 
 builder.Services.AddSingleton<IShoppingCartService, ShoppingCartService>();
+builder.Services.AddSingleton<MenuService>();
 
 var app = builder.Build();
 
