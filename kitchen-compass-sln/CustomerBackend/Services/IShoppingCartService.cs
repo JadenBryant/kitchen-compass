@@ -1,6 +1,4 @@
-﻿using CustomerBackend.Domain.Cart;
-using CustomerBackend.Domain.Menu;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace CustomerBackend.Services
 {
