@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CustomerBackend.Services;
-using CustomerBackend.Domain.Menu;
+using CustomerBackend;
 
 namespace CustomerBackend.Controllers
 {
