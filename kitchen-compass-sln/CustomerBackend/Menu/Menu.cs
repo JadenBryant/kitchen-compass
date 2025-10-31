@@ -19,10 +19,17 @@ public class Menu
         MenuType = menutype;
         Id = id;
     }
+    public Menu() { }
 
     public void AddItem(MenuItem newitem)
     {
         Items.Add(newitem);
+    }
+
+    public void RemoveItem(Guid id)
+    {
+        MenuItem? itemToRemove = Items.FirstOrDefault(item => item.Id == id);
+        Items.Remove(itemToRemove);
     }
 
     public void DisplayMenu()
