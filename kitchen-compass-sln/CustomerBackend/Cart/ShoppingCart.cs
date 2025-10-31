@@ -1,11 +1,11 @@
-﻿using CustomerBackend.Domain.Menu;
+﻿using CustomerBackend;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CustomerBackend.Domain.Cart
+namespace CustomerBackend
 {
     // CartLine represents an individual item and its quantity in the shopping cart
     public class CartLine
