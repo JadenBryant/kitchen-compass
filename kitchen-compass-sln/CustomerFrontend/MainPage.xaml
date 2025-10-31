@@ -25,9 +25,12 @@
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
 
             <Button
-                x:Name="CounterBtn"
-                Text="Click me" 
-                SemanticProperties.Hint="Counts the number of times you click"
+                Text="Log In"
+                Clicked="NavigateToLoginPage"
+                HorizontalOptions="Fill" />
+            
+            <Button
+                Text="View Sample Menu Item"
                 Clicked="NavigateToMenuItem"
                 HorizontalOptions="Fill" />
         </VerticalStackLayout>
