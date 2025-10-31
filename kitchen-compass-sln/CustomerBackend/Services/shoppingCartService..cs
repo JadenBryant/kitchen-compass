@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using CustomerBackend.Domain.Cart;
-using CustomerBackend.Domain.Menu;
 
 namespace CustomerBackend.Services
 {
