@@ -30,9 +30,16 @@ public class MenuController : ControllerBase
     }
 
     [HttpDelete("remove_item")]
-    public IActionResult RemoveItem([FromQuery] string id)
+    public IActionResult RemoveItem([FromQuery] Guid id)
     {
-        _menu.Remove(Guid.Parse(id));
+        _menu.Remove(id);
+        return Ok(new { items = _menu.Items() });
+    }
+
+    [HttpPut("edit_item_price")]
+    public IActionResult EditItemPrice([FromQuery] Guid id, float price)
+    {
+        _menu.EditItemPrice(id, price);
         return Ok(new { items = _menu.Items() });
     }
 }

@@ -25,25 +25,68 @@ public class Menu
     {
         Items.Add(newitem);
     }
+        
 
-    public void RemoveItem(Guid id)
+    public Menu CreateMenu(string menuType, string id)
     {
-        MenuItem? itemToRemove = Items.FirstOrDefault(item => item.Id == id);
+        return new Menu(menuType, id);
+    }
+
+    public void EditMenuItemPrice(Guid id, float newPrice)
+    {
+        MenuItem itemToEdit = Items.First(item => item.Id == id);
+        itemToEdit.Price = newPrice;
+    }
+
+    public void EditMenuItemName(Guid id, string newName)
+    {
+        MenuItem itemToEdit = Items.First(item => item.Id == id);
+        itemToEdit.Name = newName;
+    }
+
+    public void EditMenuItemDescription(Guid id, string newDescription)
+    {
+        MenuItem itemToEdit = Items.First(item => item.Id == id);
+        itemToEdit.Description = newDescription;
+    }
+
+    public void EditMenuItemIngredients(Guid id, string newIngredients)
+    {
+        MenuItem itemToEdit = Items.First(item => item.Id == id);
+        itemToEdit.Ingredients = newIngredients;
+    }
+
+    public void EditMenuItemCalorieCount(Guid id, int newCalorieCount)
+    {
+        MenuItem itemToEdit = Items.First(item => item.Id == id);
+        itemToEdit.CalorieCount = newCalorieCount;
+    }
+
+    public void AddItemToMenu(MenuItem newItem, Menu menu)
+    {
+        foreach (MenuItem existingitem in menu.Items)
+        {
+            if (newItem.Id == existingitem.Id)
+            {
+                break;
+            }
+            menu.AddItem(newItem);
+        }
+    }
+
+    public void RemoveMenuItem(Guid id)
+    {
+        MenuItem itemToRemove = Items.First(item => item.Id == id);
         Items.Remove(itemToRemove);
     }
 
-    public void DisplayMenu()
+    public Menu CopyMenu(Menu oldMenu, Menu newMenu)
     {
-        if (Items.Count != 0)
+        if (newMenu == null)
         {
-            foreach (MenuItem item in Items)
-            {
-                Console.WriteLine(item);
-            }
+            newMenu = oldMenu;
         }
-        else
-        {
-            Console.WriteLine("no menu items");
-        }
+
+        return newMenu;
     }
 }
