@@ -1,4 +1,5 @@
-﻿using CustomerBackend.Services;
+﻿using CustomerBackend.Models;
+using CustomerBackend.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CustomerBackend.Controllers;

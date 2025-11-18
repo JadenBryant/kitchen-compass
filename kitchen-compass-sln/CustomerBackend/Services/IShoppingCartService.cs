@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using CustomerBackend.Models;
 
 namespace CustomerBackend.Services
 {
