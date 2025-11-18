@@ -1,4 +1,6 @@
-﻿namespace CustomerBackend.Services
+﻿using CustomerBackend.Models;
+
+namespace CustomerBackend.Services
 {
     public class MenuService
     {
