@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CustomerBackend.Models;
 using CustomerBackend.Services;
-using CustomerBackend;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CustomerBackend.Controllers
 {
     // DTO the API receives
     public class ItemDto
     {
-        public Guid Id { get; set; }                 // <-- Guid (matches IMenuItem)
+        public Guid Id { get; set; }                 // <-- Guid (matches IMenuItem) // TODO: Replace with sequential IDs?
         public string Name { get; set; } = "";
         public float Price { get; set; }
         public int Qty { get; set; }

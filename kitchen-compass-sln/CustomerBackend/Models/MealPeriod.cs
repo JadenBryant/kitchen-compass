@@ -1,4 +1,6 @@
-﻿namespace CustomerBackend
+﻿using CustomerBackend.Models;
+
+namespace CustomerBackend.Models
 {
     public class MealPeriod
     {
