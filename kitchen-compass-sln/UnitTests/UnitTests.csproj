@@ -18,4 +18,8 @@
         <Using Include="NUnit.Framework" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\CustomerBackend\CustomerBackend.csproj" />
+    </ItemGroup>
+
 </Project>
