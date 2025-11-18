@@ -1,9 +1,9 @@
-﻿using System;
-using CustomerBackend;
-using NUnit.Framework;
+﻿using CustomerBackend.Models;
 
 namespace UnitTests
 {
+    using CustomerBackend;
+
     class ShoppingCartTests
     {
         private ShoppingCart _cart;
@@ -38,7 +38,7 @@ namespace UnitTests
         public void RemoveItem_Test()
         {
             _cart.AddItem(_pizza, 2);
-            _cart.RemoveItem(_pizza.Id); // Remove the pizza
+            _cart.RemoveItem(_pizza, 2); // Remove the pizza
             Assert.That(0 == _cart.Subtotal);
         }
 

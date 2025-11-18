@@ -1,4 +1,4 @@
-﻿using CustomerBackend;
+﻿using CustomerBackend.Models;
 
 namespace UnitTests;
 
