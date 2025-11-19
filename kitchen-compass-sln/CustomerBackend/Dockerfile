@@ -4,11 +4,11 @@ WORKDIR /src
 ARG BUILD_CONFIGURATION=Release
 
 # Copy project file using root-relative path
-COPY ["kitchen-compass-sln/CustomerBackend/CustomerBackend.csproj", "CustomerBackend/"]
+COPY ["CustomerBackend.csproj", "CustomerBackend/"]
 RUN dotnet restore "CustomerBackend/CustomerBackend.csproj"
 
 # Copy everything else
-COPY kitchen-compass-sln/CustomerBackend/. ./CustomerBackend/
+COPY . ./CustomerBackend/
 WORKDIR /src/CustomerBackend
 RUN dotnet build "CustomerBackend.csproj" -c $BUILD_CONFIGURATION -o /app/build
 

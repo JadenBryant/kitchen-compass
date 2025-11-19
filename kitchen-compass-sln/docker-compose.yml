@@ -1,8 +1,9 @@
 ﻿services:
   customer-backend:
     build:
-      context: ..
-      dockerfile: ./kitchen-compass-sln/CustomerBackend/Dockerfile
+      context: ./CustomerBackend/    
+#      context: ..
+#      dockerfile: ./kitchen-compass-sln/CustomerBackend/Dockerfile
     ports:
       - "8080:8080"
     env_file:
