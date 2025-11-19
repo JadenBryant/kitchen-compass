@@ -11,8 +11,9 @@ public class GoogleCloudStorageService {
     public GoogleCloudStorageService() {
         var base64 = Environment.GetEnvironmentVariable("GOOGLE_CREDENTIALS_B64");
 
-        if (string.IsNullOrEmpty(base64))
+        if (string.IsNullOrEmpty(base64)) {
             throw new InvalidOperationException("Missing GOOGLE_CREDENTIALS_B64 environment variable");
+        }
 
         var jsonBytes = Convert.FromBase64String(base64);
         using var stream = new MemoryStream(jsonBytes);
