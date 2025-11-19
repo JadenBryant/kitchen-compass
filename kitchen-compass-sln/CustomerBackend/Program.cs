@@ -5,10 +5,17 @@ using Google.Apis.Auth.OAuth2;
 var builder = WebApplication.CreateBuilder(args);
 
 // Initialize Firebase Admin SDK
-var json = Environment.GetEnvironmentVariable("FIREBASE_CREDENTIAL_JSON");
-FirebaseApp.Create(new AppOptions()
-{
-    Credential = GoogleCredential.FromJson(json)
+var base64 = Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS_B64");
+
+if (string.IsNullOrEmpty(base64)) {
+    throw new InvalidOperationException("Missing FIREBASE_CREDENTIALS_B64 environment variable");
+}
+
+var jsonBytes = Convert.FromBase64String(base64);
+using var stream = new MemoryStream(jsonBytes);
+
+FirebaseApp.Create(new AppOptions() {
+    Credential = GoogleCredential.FromStream(stream),
 });
 
 builder.Services.AddControllers();
@@ -33,4 +40,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
- 
