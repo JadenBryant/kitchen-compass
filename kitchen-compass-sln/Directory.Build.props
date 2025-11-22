@@ -1,6 +1,0 @@
-﻿<Project>
-    <PropertyGroup>
-        <AndroidSdkDirectory>$(ANDROID_SDK_ROOT)</AndroidSdkDirectory>
-        <AcceptAndroidSDKLicenses>true</AcceptAndroidSDKLicenses>
-    </PropertyGroup>
-</Project>
