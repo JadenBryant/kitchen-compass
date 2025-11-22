@@ -20,7 +20,7 @@ jobs:
       - name: Build and Push
         uses: docker/build-push-action@v5
         with:
-          context: .kitchen-compass-sln
+          context: .kitchen-compass
           file: ./CustomerBackend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest
