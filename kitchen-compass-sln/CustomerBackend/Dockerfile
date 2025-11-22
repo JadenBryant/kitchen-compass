@@ -4,11 +4,11 @@ WORKDIR /src
 ARG BUILD_CONFIGURATION=Release
 
 # Copy the CustomerBackend project file and restore NuGet packages.
-COPY CustomerBackend/CustomerBackend.csproj ./CustomerBackend/
+COPY kitchen-compass-sln/CustomerBackend/CustomerBackend.csproj ./CustomerBackend/
 RUN dotnet restore "CustomerBackend/CustomerBackend.csproj"
 
 # Copy the rest of the CustomerBackend project into the container.
-COPY . .
+COPY kitchen-compass-sln/CustomerBackend/. ./CustomerBackend/
 
 # Build the application.
 WORKDIR /src/CustomerBackend
