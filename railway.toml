@@ -1,6 +1,5 @@
 [build]
-builder = "Dockerfile"
-buildPath = "kitchen-compass-sln"
+builder = "DOCKERFILE"
 dockerfilePath = "kitchen-compass-sln/CustomerBackend/Dockerfile"
 
 [deploy]
