@@ -1,7 +1,7 @@
 [build]
 builder = "Dockerfile"
 dockerfilePath = "./kitchen-compass-sln/CustomerBackend/Dockerfile"
-buildPath = "./kitchen-compass-sln/CustomerBackend"
+buildPath = "./kitchen-compass-sln"
 
 [deploy]
 start = "dotnet CustomerBackend.dll"
