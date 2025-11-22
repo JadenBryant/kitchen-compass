@@ -39,10 +39,10 @@ Here are links to issues we worked on but did not complete in this sprint:
 ## Code Files for Review
 Please review the following code files, which were actively developed during this
 sprint, for quality:
-* [AuthController.cs](https://github.com/JadenBryant/kitchen-compass/blob/main/kitchen-compass-sln/CustomerBackend/Controllers/AuthController.cs)
-* [ImageController.cs](https://github.com/JadenBryant/kitchen-compass/blob/main/kitchen-compass-sln/CustomerBackend/Controllers/ImageController.cs)
-* [CartController.cs](https://github.com/JadenBryant/kitchen-compass/blob/main/kitchen-compass-sln/CustomerBackend/Controllers/CartController.cs)
-* [MenuController.cs](https://github.com/JadenBryant/kitchen-compass/blob/main/kitchen-compass-sln/CustomerBackend/Controllers/MenuController.cs)
+* [AuthController.cs](https://github.com/JadenBryant/kitchen-compass/blob/main/kitchen-compass/CustomerBackend/Controllers/AuthController.cs)
+* [ImageController.cs](https://github.com/JadenBryant/kitchen-compass/blob/main/kitchen-compass/CustomerBackend/Controllers/ImageController.cs)
+* [CartController.cs](https://github.com/JadenBryant/kitchen-compass/blob/main/kitchen-compass/CustomerBackend/Controllers/CartController.cs)
+* [MenuController.cs](https://github.com/JadenBryant/kitchen-compass/blob/main/kitchen-compass/CustomerBackend/Controllers/MenuController.cs)
 
 ## Retrospective Summary
 Here's what went well:
