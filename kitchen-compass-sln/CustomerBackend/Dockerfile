@@ -8,7 +8,7 @@ COPY CustomerBackend/CustomerBackend.csproj ./CustomerBackend/
 RUN dotnet restore "CustomerBackend/CustomerBackend.csproj"
 
 # Copy the rest of the CustomerBackend project into the container.
-COPY CustomerBackend/. ./CustomerBackend/
+COPY . .
 
 # Build the application.
 WORKDIR /src/CustomerBackend
