@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CustomerBackend\CustomerBackend.csproj" />
+      <ProjectReference Include="$(SolutionDir)src\CustomerBackend\CustomerBackend.csproj" />
     </ItemGroup>
 
 </Project>
