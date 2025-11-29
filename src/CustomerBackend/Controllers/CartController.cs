@@ -9,13 +9,14 @@ namespace CustomerBackend.Controllers
     {
         public Guid Id { get; set; }                 // <-- Guid (matches IMenuItem) // TODO: Replace with sequential IDs?
         public string Name { get; set; } = "";
-        public float Price { get; set; }
+        public decimal Price { get; set; }
         public int Qty { get; set; }
 
         // Optional; present to satisfy non-nullable properties on MenuItem
         public string? Description { get; set; }
         public string? Ingredients { get; set; }
         public int? CalorieCount { get; set; }
+        public string ImageName { get; set; }
     }
 
     [ApiController]

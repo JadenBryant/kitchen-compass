@@ -8,15 +8,23 @@ namespace CustomerBackend.Controllers;
 [Route("api/[controller]")]
 public class MenuController : ControllerBase
 {
-    private readonly MenuService _menu;
-    public MenuController(MenuService menu) => _menu = menu;
+    /// <summary>
+    /// Field for the menu service.
+    /// </summary>
+    private readonly MenuService _service;
+    
+    /// <summary>
+    /// Constructor for the menu controller.
+    /// </summary>
+    /// <param name="service">The menu service.</param>
+    public MenuController(MenuService service) => _service = service;
     
     [HttpGet]
-    public IActionResult Get()
-            => Ok(new { items = _menu.Items() });
-
+    public async Task<IActionResult> Get([FromQuery] string menuId)
+        => Ok(new { items = await _service.GetItemsAsync(menuId) });
+    
     [HttpPost("add_item")]
-    public IActionResult AddItem([FromQuery] ItemDto dto)
+    public async Task<IActionResult> AddItem([FromQuery] string menuId, [FromBody] CartItemDto dto)
     {
         var item = new MenuItem(dto.Name, dto.Price)
         {
@@ -25,22 +33,22 @@ public class MenuController : ControllerBase
             Ingredients = dto.Ingredients ?? string.Empty,
             CalorieCount = dto.CalorieCount ?? 0
         };
-
-        _menu.Add(item);
-        return Ok(new { items = _menu.Items() });
+    
+        await _service.AddItemAsync(menuId, item);
+        return Ok(new { items = await _service.GetItemsAsync(menuId) });
     }
-
+    
     [HttpDelete("remove_item")]
-    public IActionResult RemoveItem([FromQuery] Guid id)
+    public async Task<IActionResult> RemoveItem([FromQuery] string menuId, [FromQuery] Guid itemId)
     {
-        _menu.Remove(id);
-        return Ok(new { items = _menu.Items() });
+        await _service.RemoveItemAsync(menuId, itemId);
+        return Ok(new { items = await _service.GetItemsAsync(menuId) });
     }
-
+    
     [HttpPut("edit_item_price")]
-    public IActionResult EditItemPrice([FromQuery] Guid id, float price)
+    public async Task<IActionResult> EditItemPrice([FromQuery] string menuId, [FromQuery] Guid itemId, [FromQuery] decimal price)
     {
-        _menu.EditItemPrice(id, price);
-        return Ok(new { items = _menu.Items() });
+        await _service.EditItemPriceAsync(menuId, itemId, price);
+        return Ok(new { items = await _service.GetItemsAsync(menuId) });
     }
 }
