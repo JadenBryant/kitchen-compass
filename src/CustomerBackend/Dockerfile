@@ -3,12 +3,14 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 ARG BUILD_CONFIGURATION=Release
 
-# Copy project file using root-relative path
-COPY ["CustomerBackend.csproj", "CustomerBackend/"]
+# Copy the CustomerBackend project file and restore NuGet packages.
+COPY src/CustomerBackend/CustomerBackend.csproj ./CustomerBackend/
 RUN dotnet restore "CustomerBackend/CustomerBackend.csproj"
 
-# Copy everything else
-COPY . ./CustomerBackend/
+# Copy the rest of the CustomerBackend project into the container.
+COPY src/CustomerBackend/. ./CustomerBackend/
+
+# Build the application.
 WORKDIR /src/CustomerBackend
 RUN dotnet build "CustomerBackend.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
