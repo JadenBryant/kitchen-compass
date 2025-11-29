@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CustomerBackend.Controllers
 {
     // DTO the API receives
-    public class ItemDto
+    public class CartItemDto
     {
         public Guid Id { get; set; }                 // <-- Guid (matches IMenuItem) // TODO: Replace with sequential IDs?
         public string Name { get; set; } = "";
@@ -30,7 +30,7 @@ namespace CustomerBackend.Controllers
             => Ok(new { items = _cart.Items(), subtotal = _cart.Subtotal() });
 
         [HttpPost("add")]
-        public IActionResult Add([FromBody] ItemDto dto)
+        public IActionResult Add([FromBody] CartItemDto dto)
         {
             var item = new MenuItem(dto.Name, dto.Price)
             {
@@ -45,7 +45,7 @@ namespace CustomerBackend.Controllers
         }
 
         [HttpPost("remove")]
-        public IActionResult Remove([FromBody] ItemDto dto)
+        public IActionResult Remove([FromBody] CartItemDto dto)
         {
             var item = new MenuItem(dto.Name, dto.Price)
             {
