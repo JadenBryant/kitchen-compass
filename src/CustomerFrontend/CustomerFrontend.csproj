@@ -107,5 +107,9 @@
 <!--            <ProjectReference Include="..\CustomerBackend\CustomerBackend.csproj" />-->
 <!--        </ItemGroup>-->
     <!-- END: Project references -->
+    
+    <ItemGroup>
+        <ProjectReference Include="..\Shared\Shared.csproj" />
+    </ItemGroup>
 
 </Project>
