@@ -12,7 +12,7 @@ namespace CustomerBackend.Services
 
         public void Clear() => _cart.ClearCart();
 
-        public float Subtotal() => _cart.Subtotal;
+        public decimal Subtotal() => _cart.Subtotal;
 
         public List<CartLine> Items() => _cart.GetItems();
     }

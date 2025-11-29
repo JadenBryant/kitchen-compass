@@ -26,7 +26,7 @@ public class Menu
         return new Menu(menuType, id);
     }
 
-    public void EditMenuItemPrice(Guid id, float newPrice)
+    public void EditMenuItemPrice(Guid id, decimal newPrice)
     {
         MenuItem itemToEdit = Items.First(item => item.Id == id);
         itemToEdit.Price = newPrice;

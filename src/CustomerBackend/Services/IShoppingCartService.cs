@@ -7,7 +7,7 @@ namespace CustomerBackend.Services
         void Add(IMenuItem item, int quantity);
         void Remove(IMenuItem item, int quantity);
         void Clear();
-        float Subtotal();
+        decimal Subtotal();
         List<CartLine> Items();
     }
 

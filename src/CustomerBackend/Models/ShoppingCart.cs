@@ -9,7 +9,7 @@ namespace CustomerBackend
         public int Quantity { get; set; }     // Quantity of this item in the cart
 
         // LineTotal calculates the total price for the item based on its quantity
-        public float LineTotal => Item.Price * Quantity;
+        public decimal LineTotal => Item.Price * Quantity;
 
         // Constructor to initialize the CartLine with the item and quantity
         public CartLine(IMenuItem item, int quantity)
@@ -27,7 +27,7 @@ namespace CustomerBackend
         public Guid Id { get; } = Guid.NewGuid();   // Unique identifier for the shopping cart
 
         // Subtotal calculates the total cost of all items
-        public float Subtotal => _cartLines.Sum(line => line.LineTotal);
+        public decimal Subtotal => _cartLines.Sum(line => line.LineTotal);
 
         // Method to add an item to the cart, if it already exists, it updates the quantity
         public void AddItem(IMenuItem item, int quantity)
