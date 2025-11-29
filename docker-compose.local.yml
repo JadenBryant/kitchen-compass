@@ -10,8 +10,14 @@ services:
       - mongo-data:/data/db
 
   customer-backend:
+    env_file:
+      - .env
     environment:
-      MONGO_CONNECTION_STRING: "mongodb://dev:pass@mongo:27017"
+      - MONGO_CONNECTION_STRING=mongodb://dev:pass@mongo:27017
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+        - mongo
+      
 
 volumes:
   mongo-data:
