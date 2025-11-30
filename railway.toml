@@ -1,7 +1,0 @@
-[build]
-builder = "DOCKERFILE"
-dockerfilePath = "src/CustomerBackend/Dockerfile"
-
-[deploy]
-startCommand = "dotnet CustomerBackend.dll"
-restartPolicyType = "never"
