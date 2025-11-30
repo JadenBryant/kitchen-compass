@@ -6,6 +6,9 @@ services:
     depends_on:
       - api
       - frontend
+    environment:
+      API_ORIGIN: http://api:8080
+      FRONTEND_ORIGIN: http://frontend:4173
 
   api:
     build:

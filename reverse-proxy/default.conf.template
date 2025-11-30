@@ -1,23 +1,23 @@
 server {
     listen 80;
 
-    # Swagger (MUST come before /)
+    # Swagger
     location /swagger/ {
-        proxy_pass http://api:8080/swagger/;
+        proxy_pass ${API_ORIGIN}/swagger/;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
     }
 
     # API
     location /api/ {
-        proxy_pass http://api:8080/api/;
+        proxy_pass ${API_ORIGIN}/api/;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
     }
 
-    # Frontend (Vue)
+    # Frontend
     location / {
-        proxy_pass http://frontend:4173;
+        proxy_pass ${FRONTEND_ORIGIN};
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
     }
