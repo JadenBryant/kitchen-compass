@@ -5,17 +5,18 @@ using Microsoft.AspNetCore.Mvc;
 namespace CustomerBackend.Controllers
 {
     // DTO the API receives
-    public class ItemDto
+    public class CartItemDto
     {
         public Guid Id { get; set; }                 // <-- Guid (matches IMenuItem) // TODO: Replace with sequential IDs?
         public string Name { get; set; } = "";
-        public float Price { get; set; }
+        public decimal Price { get; set; }
         public int Qty { get; set; }
 
         // Optional; present to satisfy non-nullable properties on MenuItem
         public string? Description { get; set; }
         public string? Ingredients { get; set; }
         public int? CalorieCount { get; set; }
+        public string ImageName { get; set; }
     }
 
     [ApiController]
@@ -30,7 +31,7 @@ namespace CustomerBackend.Controllers
             => Ok(new { items = _cart.Items(), subtotal = _cart.Subtotal() });
 
         [HttpPost("add")]
-        public IActionResult Add([FromBody] ItemDto dto)
+        public IActionResult Add([FromBody] CartItemDto dto)
         {
             var item = new MenuItem(dto.Name, dto.Price)
             {
@@ -45,7 +46,7 @@ namespace CustomerBackend.Controllers
         }
 
         [HttpPost("remove")]
-        public IActionResult Remove([FromBody] ItemDto dto)
+        public IActionResult Remove([FromBody] CartItemDto dto)
         {
             var item = new MenuItem(dto.Name, dto.Price)
             {

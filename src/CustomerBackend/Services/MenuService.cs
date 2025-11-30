@@ -1,16 +1,47 @@
 ﻿using CustomerBackend.Models;
+using MongoDB.Driver;
 
-namespace CustomerBackend.Services
+namespace CustomerBackend.Services;
+
+public class MenuService
 {
-    public class MenuService
+    private readonly IMongoCollection<Menu> _menuCollection;
+
+    public MenuService(IMongoDatabase db)
     {
-        private readonly Menu _menu = new();
+        _menuCollection = db.GetCollection<Menu>("Menus");
+    }
 
-        public void Add(MenuItem item) => _menu.AddItem(item);
+    public async Task<Menu?> GetMenuAsync(string menuId)
+    {
+        return await _menuCollection.Find(m => m.Id == menuId).FirstOrDefaultAsync();
+    }
 
-        public void Remove(Guid id) => _menu.RemoveMenuItem(id);
-        public void EditItemPrice(Guid itemId, float newPrice) => _menu.EditMenuItemPrice(itemId, newPrice);
+    public async Task AddItemAsync(string menuId, MenuItem item)
+    {
+        var update = Builders<Menu>.Update.Push(m => m.Items, item);
+        await _menuCollection.UpdateOneAsync(m => m.Id == menuId, update);
+    }
 
-        public List<MenuItem> Items() => _menu.Items;
+    public async Task RemoveItemAsync(string menuId, Guid itemId)
+    {
+        var update = Builders<Menu>.Update.PullFilter(m => m.Items, i => i.Id == itemId);
+        await _menuCollection.UpdateOneAsync(m => m.Id == menuId, update);
+    }
+
+    public async Task EditItemPriceAsync(string menuId, Guid itemId, decimal newPrice)
+    {
+        var filter = Builders<Menu>.Filter.And(
+            Builders<Menu>.Filter.Eq(m => m.Id, menuId),
+            Builders<Menu>.Filter.ElemMatch(m => m.Items, i => i.Id == itemId)
+        );
+        var update = Builders<Menu>.Update.Set("Items.$.Price", newPrice);
+        await _menuCollection.UpdateOneAsync(filter, update);
+    }
+
+    public async Task<List<MenuItem>> GetItemsAsync(string menuId)
+    {
+        var menu = await GetMenuAsync(menuId);
+        return menu?.Items ?? new List<MenuItem>();
     }
 }

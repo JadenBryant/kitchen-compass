@@ -6,9 +6,9 @@
         public DateTime OrderDate { get; } = DateTime.Now; //timestamp of the order
         public List<MenuItem> Items { get; }  //list of the items being purchased
 
-        public float Subtotal { get; private set;  } //price before tax
-        public float Tax { get; } //amount of tax
-        public float Total { get; }  //subtotal + tax
+        public decimal Subtotal { get; private set;  } //price before tax
+        public decimal Tax { get; private set; } //amount of tax
+        public decimal Total { get; private set; }  //subtotal + tax
         public string Status { get; private set; } //either pending, completed, or canceled
         public string MethodOfPayment { get; private set; } //card, paypal or etc
 
@@ -24,9 +24,8 @@
             Status = "Pending"; // when the order is created the default status is pending
         }
 
-        private void CalculateSubtotal()
-        {
-            float subtotal = 0f;
+        private void CalculateSubtotal() {
+            decimal subtotal = 0.00m;
             foreach(MenuItem item in Items)
             {
                 subtotal += item.Price;
@@ -37,14 +36,16 @@
 
         private void CalculateTax()
         {
-            float tax = 0f;
-            tax = Subtotal * 0.08f; //pullman prepared food tax is 8.0%
+            decimal tax = 0.00m;
+            tax = Subtotal * 0.08m; //pullman prepared food tax is 8.0%
+            Tax = tax;
         }
 
         private void CalculateTotal()
         {
-            float total = 0f;
+            decimal total = 0.00m;
             total = Subtotal + Tax;
+            Total = total;
         }
 
         public void CompleteOrder()
