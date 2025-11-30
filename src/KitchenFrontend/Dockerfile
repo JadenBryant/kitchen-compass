@@ -1,9 +1,9 @@
 ﻿# Build stage
 FROM node:20 AS build
 WORKDIR /app
-COPY package*.json ./
+COPY src/KitchenFrontend/package*.json ./
 RUN npm install
-COPY . .
+COPY src/KitchenFrontend/. .
 RUN npm run build
 
 # Production stage
