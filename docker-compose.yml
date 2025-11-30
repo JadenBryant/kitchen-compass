@@ -1,14 +1,27 @@
 ﻿services:
-  customer-backend:
-    build:
-      context: .
-      dockerfile: src/CustomerBackend/Dockerfile
+  reverse-proxy:
+    build: ./reverse-proxy
     ports:
-      - "8080:8080"
+      - "${PORT:-8080}:80" # Railway: uses $PORT; Local: defaults to 8080
+    depends_on:
+      - api
+      - frontend
+  
+  api:
+    build:
+      context: ./src/CustomerBackend
+      dockerfile: Dockerfile
+    expose:
+      - "8080"
     env_file:
-        - .env
-    networks:
-      - kitchen-net
+      - .env
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_ENVIRONMENT=Production
 
-networks:
-  kitchen-net:
+  frontend:
+    build:
+      context: ./src/KitchenFrontend
+      dockerfile: Dockerfile
+    expose:
+      - "4173"

@@ -1,4 +1,37 @@
 services:
+  reverse-proxy:
+    build: ./reverse-proxy
+    ports:
+      - "8080:80"          # Local entrypoint
+    depends_on:
+      - api
+      - frontend
+    environment:
+      API_ORIGIN: http://api:8080
+      FRONTEND_ORIGIN: http://frontend:4173
+
+  api:
+    build:
+      context: .
+      dockerfile: /src/CustomerBackend/Dockerfile
+    expose:
+      - "8080"
+    env_file:
+      - .env
+    environment:
+      ASPNETCORE_URLS: "http://+:8080"
+      ASPNETCORE_ENVIRONMENT: "Development"
+      MONGO_CONNECTION_STRING: "mongodb://dev:pass@mongo:27017"
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: .
+      dockerfile: /src/KitchenFrontend/Dockerfile
+    expose:
+      - "4173"
+
   mongo:
     image: mongo:7
     ports:
@@ -8,10 +41,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: pass
     volumes:
       - mongo-data:/data/db
-
-  customer-backend:
-    environment:
-      MONGO_CONNECTION_STRING: "mongodb://dev:pass@mongo:27017"
 
 volumes:
   mongo-data:
