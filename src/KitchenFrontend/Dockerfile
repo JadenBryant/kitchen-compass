@@ -3,7 +3,7 @@ FROM node:20 AS build
 WORKDIR /app
 COPY src/KitchenFrontend/package*.json ./
 RUN npm install
-COPY . .
+COPY src/KitchenFrontend/. .
 RUN npm run build
 
 # Production stage
