@@ -1,4 +1,5 @@
-﻿using CustomerBackend.Models;
+﻿using CustomerBackend.DTOs.User;
+using CustomerBackend.Models;
 using CustomerBackend.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -13,7 +14,7 @@ public class AuthController : ControllerBase
     private readonly string _firebaseApiKey;
     private readonly JsonSerializerOptions _jsonOptions;
     private readonly UserService _userService;
-
+    
     public AuthController(IConfiguration config, UserService userService)
     {
         _httpClient = new HttpClient();
@@ -101,23 +102,4 @@ public class AuthController : ControllerBase
         var json = JsonSerializer.Deserialize<JsonElement>(content, _jsonOptions);
         return StatusCode((int)response.StatusCode, json);
     }
-}
-
-public class RegisterRequest
-{
-    public string Email { get; set; } = "";
-    public string Password { get; set; } = "";
-    public string FirstName { get; set; } = "";
-    public string LastName { get; set; } = "";
-}
-
-public class LoginRequest
-{
-    public string Email { get; set; } = "";
-    public string Password { get; set; } = "";
-}
-
-public class VerifyRequest
-{
-    public string IdToken { get; set; } = "";
 }
