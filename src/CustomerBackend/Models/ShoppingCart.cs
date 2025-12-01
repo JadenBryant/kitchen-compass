@@ -1,82 +1,76 @@
-﻿using CustomerBackend.Models;
+﻿namespace CustomerBackend.Models;
 
-namespace CustomerBackend
+/// <summary>
+/// Represents a shopping cart of items for an order.
+/// </summary>
+public class ShoppingCart
 {
-    // CartLine represents an individual item and its quantity in the shopping cart
-    public class CartLine
+    /// <summary>
+    /// Unique identifier for the shopping cart.
+    /// </summary>
+    public Guid Id { get; } = Guid.NewGuid();
+    
+    /// <summary>
+    /// List of all items currently in the cart.
+    /// </summary>
+    public readonly List<CartItem> Items = new List<CartItem>();
+    
+    /// <summary>
+    /// Calculates the total cost of all items in the cart.
+    /// </summary>
+    public decimal Subtotal => Items.Sum(line => line.Subtotal);
+    
+    /// <summary>
+    /// Adds an item to the shopping cart.
+    /// </summary>
+    /// <param name="item">A menu item.</param>
+    /// <param name="quantity">The number of items to add.</param>
+    public void AddItem(MenuItem item, int quantity = 1)
     {
-        public IMenuItem Item { get; set; }   // The item in the cart
-        public int Quantity { get; set; }     // Quantity of this item in the cart
+        // Check if the item is already in the cart by comparing the item's ID.
+        var existingItem = Items.FirstOrDefault(cartItem => cartItem.MenuItemId == item.Id);
 
-        // LineTotal calculates the total price for the item based on its quantity
-        public decimal LineTotal => Item.Price * Quantity;
-
-        // Constructor to initialize the CartLine with the item and quantity
-        public CartLine(IMenuItem item, int quantity)
+        // If the item exists, just update the quantity
+        if (existingItem != null)
         {
-            Item = item;      // Assign the item
-            Quantity = quantity; // Assign the quantity
+            existingItem.Quantity += quantity;
+        }
+        else
+        {
+            // Otherwise, add a new CartLine with the item and quantity
+            Items.Add(new CartItem(item.Id));
+        }
+    }
+    
+    /// <summary>
+    /// Removes an item from the shopping cart.
+    /// </summary>
+    /// <param name="item">A menu item.</param>
+    /// <param name="quantity">The number of items to remove.</param>
+    public void RemoveItem(MenuItem item, int quantity)
+    {
+        // Find the item to remove by comparing its ID.
+        var existingItem = Items.FirstOrDefault(cartItem => cartItem.MenuItemId == item.Id);
+
+        // If the item is found, reduce its quantity
+        if (existingItem != null)
+        {
+            existingItem.Quantity -= quantity;
+
+            // If quantity falls to zero or less, remove it completely
+            if (existingItem.Quantity <= 0)
+            {
+                Items.Remove(existingItem);
+            }
         }
     }
 
-    // ShoppingCart is the main class that holds all the CartLine objects and calculates totals
-    public class ShoppingCart
+    /// <summary>
+    /// Removes all items from the cart.
+    /// </summary>
+    public void ClearCart()
     {
-        private List<CartLine> _cartLines = new List<CartLine>();  // List that holds all the items in the cart
-
-        public Guid Id { get; } = Guid.NewGuid();   // Unique identifier for the shopping cart
-
-        // Subtotal calculates the total cost of all items
-        public decimal Subtotal => _cartLines.Sum(line => line.LineTotal);
-
-        // Method to add an item to the cart, if it already exists, it updates the quantity
-        public void AddItem(IMenuItem item, int quantity)
-        {
-            // Check if the item is already in the cart by comparing the item's ID
-            var existingItem = _cartLines.FirstOrDefault(Line => Line.Item.Id == item.Id);
-
-            // If the item exists, just update the quantity
-            if (existingItem != null)
-            {
-                existingItem.Quantity += quantity;
-            }
-            else
-            {
-                // Otherwise, add a new CartLine with the item and quantity
-                _cartLines.Add(new CartLine(item, quantity));
-            }
-        }
-
-        // Method to remove an item from the cart by its unique ID
-        public void RemoveItem(IMenuItem item, int quantity)
-        {
-            // Find the item to remove by comparing its ID
-            var existingItem = _cartLines.FirstOrDefault(line => line.Item.Id == item.Id);
-
-            // If the item is found, reduce its quantity
-            if (existingItem != null)
-            {
-                existingItem.Quantity -= quantity;
-
-                // If quantity falls to zero or less, remove it completely
-                if (existingItem.Quantity <= 0)
-                {
-                    _cartLines.Remove(existingItem);
-                }
-            }
-        }
-
-        // Method to clear all items from the cart
-        public void ClearCart()
-        {
-            // Simply Clears all CartLine objects from the cart
-            _cartLines.Clear();
-        }
-
-        // Added for API use — returns the current items in the cart
-        public List<CartLine> GetItems()
-        {
-            return _cartLines;
-        }
+        // Simply Clears all CartLine objects from the cart
+        Items.Clear();
     }
 }

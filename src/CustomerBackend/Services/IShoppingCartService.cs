@@ -4,11 +4,11 @@ namespace CustomerBackend.Services
 {
     public interface IShoppingCartService
     {
-        void Add(IMenuItem item, int quantity);
-        void Remove(IMenuItem item, int quantity);
+        void Add(MenuItem item, int quantity);
+        void Remove(MenuItem item, int quantity);
         void Clear();
         decimal Subtotal();
-        List<CartLine> Items();
+        List<CartItem> Items();
     }
 
 }

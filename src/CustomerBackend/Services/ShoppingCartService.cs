@@ -1,19 +1,18 @@
 ﻿using CustomerBackend.Models;
 
-namespace CustomerBackend.Services
+namespace CustomerBackend.Services;
+
+public class ShoppingCartService
 {
-    public class ShoppingCartService : IShoppingCartService
-    {
-        private readonly ShoppingCart _cart = new();
+    private readonly ShoppingCart _cart = new();
+    
+    public List<CartItem> Items => _cart.Items;
 
-        public void Add(IMenuItem item, int quantity) => _cart.AddItem(item, quantity);
+    public void Add(MenuItem item, int quantity) => _cart.AddItem(item, quantity);
 
-        public void Remove(IMenuItem item, int quantity) => _cart.RemoveItem(item, quantity);
+    public void Remove(MenuItem item, int quantity) => _cart.RemoveItem(item, quantity);
 
-        public void Clear() => _cart.ClearCart();
+    public void Clear() => _cart.ClearCart();
 
-        public decimal Subtotal() => _cart.Subtotal;
-
-        public List<CartLine> Items() => _cart.GetItems();
-    }
+    public decimal Subtotal() => _cart.Subtotal;
 }

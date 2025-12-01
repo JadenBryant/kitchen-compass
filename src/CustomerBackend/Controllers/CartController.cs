@@ -23,12 +23,12 @@ namespace CustomerBackend.Controllers
     [Route("api/[controller]")]
     public class CartController : ControllerBase
     {
-        private readonly IShoppingCartService _cart;
-        public CartController(IShoppingCartService cart) => _cart = cart;
+        private readonly ShoppingCartService _cart;
+        public CartController(ShoppingCartService cart) => _cart = cart;
 
         [HttpGet]
         public IActionResult Get()
-            => Ok(new { items = _cart.Items(), subtotal = _cart.Subtotal() });
+            => Ok(new { items = _cart.Items, subtotal = _cart.Subtotal() });
 
         [HttpPost("add")]
         public IActionResult Add([FromBody] CartItemDto dto)
@@ -42,7 +42,7 @@ namespace CustomerBackend.Controllers
             };
 
             _cart.Add(item, dto.Qty);
-            return Ok(new { items = _cart.Items(), subtotal = _cart.Subtotal() });
+            return Ok(new { items = _cart.Items, subtotal = _cart.Subtotal() });
         }
 
         [HttpPost("remove")]
@@ -57,7 +57,7 @@ namespace CustomerBackend.Controllers
             };
 
             _cart.Remove(item, dto.Qty);
-            return Ok(new { items = _cart.Items(), subtotal = _cart.Subtotal() });
+            return Ok(new { items = _cart.Items, subtotal = _cart.Subtotal() });
         }
 
         [HttpDelete("clear")]

@@ -36,7 +36,7 @@ builder.Services.Configure<DatabaseSettings>(
 
 // Register services as singletons.
 builder.Services.AddSingleton<GoogleCloudStorageService>();
-builder.Services.AddSingleton<IShoppingCartService, ShoppingCartService>();
+builder.Services.AddSingleton<ShoppingCartService>();
 builder.Services.AddSingleton<MenuService>();
 builder.Services.AddSingleton<MenuItemService>();
 

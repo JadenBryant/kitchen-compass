@@ -1,6 +1,6 @@
 namespace CustomerBackend.Models;
 
-public class CartItem
+public class CartItem(Guid MenuItemId)
 {
     public Guid MenuItemId { get; set; }
     public string Name { get; set; }
