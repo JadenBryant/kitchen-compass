@@ -39,6 +39,7 @@ builder.Services.AddSingleton<GoogleCloudStorageService>();
 builder.Services.AddSingleton<ShoppingCartService>();
 builder.Services.AddSingleton<MenuService>();
 builder.Services.AddSingleton<MenuItemService>();
+builder.Services.AddSingleton<UserService>();
 
 // Configure MongoDB client and database.
 builder.Services.AddSingleton<IMongoClient>(sp =>
