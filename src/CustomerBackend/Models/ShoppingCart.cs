@@ -1,4 +1,7 @@
-﻿namespace CustomerBackend.Models;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace CustomerBackend.Models;
 
 /// <summary>
 /// Represents a shopping cart of items for an order.
@@ -8,12 +11,28 @@ public class ShoppingCart
     /// <summary>
     /// Unique identifier for the shopping cart.
     /// </summary>
-    public Guid Id { get; } = Guid.NewGuid();
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; } = null!;
+    
+    /// <summary>
+    /// Identifier for the user who owns the cart.
+    /// </summary>
+    [BsonElement("userId")]
+    public string UserId { get; set; } = "";
     
     /// <summary>
     /// List of all items currently in the cart.
     /// </summary>
-    public readonly List<CartItem> Items = new List<CartItem>();
+    [BsonElement("items")]
+    public List<CartItem> Items { get; set; } = new();
+    
+    /// <summary>
+    /// Last time the cart was updated.
+    /// </summary>
+    [BsonElement("lastUpdated")]
+    [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
+    public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
     
     /// <summary>
     /// Calculates the total cost of all items in the cart.
@@ -27,19 +46,23 @@ public class ShoppingCart
     /// <param name="quantity">The number of items to add.</param>
     public void AddItem(MenuItem item, int quantity = 1)
     {
-        // Check if the item is already in the cart by comparing the item's ID.
         var existingItem = Items.FirstOrDefault(cartItem => cartItem.MenuItemId == item.Id);
 
-        // If the item exists, just update the quantity
         if (existingItem != null)
         {
             existingItem.Quantity += quantity;
         }
         else
         {
-            // Otherwise, add a new CartLine with the item and quantity
-            Items.Add(new CartItem(item.Id));
+            Items.Add(new CartItem(item.Id)
+            {
+                Name = item.Name,
+                Price = item.Price,
+                Quantity = quantity
+            });
         }
+
+        LastUpdated = DateTime.UtcNow;
     }
     
     /// <summary>
@@ -47,22 +70,21 @@ public class ShoppingCart
     /// </summary>
     /// <param name="item">A menu item.</param>
     /// <param name="quantity">The number of items to remove.</param>
-    public void RemoveItem(MenuItem item, int quantity)
+    public void RemoveItem(MenuItem item, int quantity = 1)
     {
-        // Find the item to remove by comparing its ID.
         var existingItem = Items.FirstOrDefault(cartItem => cartItem.MenuItemId == item.Id);
 
-        // If the item is found, reduce its quantity
         if (existingItem != null)
         {
             existingItem.Quantity -= quantity;
 
-            // If quantity falls to zero or less, remove it completely
             if (existingItem.Quantity <= 0)
             {
                 Items.Remove(existingItem);
             }
         }
+
+        LastUpdated = DateTime.UtcNow;
     }
 
     /// <summary>
@@ -70,7 +92,7 @@ public class ShoppingCart
     /// </summary>
     public void ClearCart()
     {
-        // Simply Clears all CartLine objects from the cart
         Items.Clear();
+        LastUpdated = DateTime.UtcNow;
     }
 }
