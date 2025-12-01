@@ -1,10 +1,11 @@
 services:
+  # Reverse proxy (nginx)
   reverse-proxy:
     build:
      context: ./reverse-proxy
-     dockerfile: Dockerfile
+     dockerfile: Dockerfile.local
     ports:
-      - "8080:80"          # Local entrypoint
+      - "8080:80"
     depends_on:
       - api
       - frontend
@@ -12,10 +13,11 @@ services:
       API_ORIGIN: http://api:8080
       FRONTEND_ORIGIN: http://frontend:4173
 
+  # CustomerBackend
   api:
     build:
       context: ./src
-      dockerfile: CustomerBackend/Dockerfile
+      dockerfile: CustomerBackend/Dockerfile.local
     expose:
       - "8080"
     env_file:
@@ -28,10 +30,11 @@ services:
     depends_on:
       - mongo
 
+  # KitchenBackend
   frontend:
     build:
       context: ./src/KitchenFrontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.local
     expose:
       - "4173"
 
