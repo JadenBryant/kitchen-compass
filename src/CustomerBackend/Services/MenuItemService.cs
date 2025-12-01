@@ -9,7 +9,7 @@ public class MenuItemService
 
     public MenuItemService(IMongoDatabase db)
     {
-        _items = db.GetCollection<MenuItem>("MenuItems");
+        _items = db.GetCollection<MenuItem>("menuItems");
     }
 
     public async Task<MenuItem> CreateAsync(MenuItem item)
