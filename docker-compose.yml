@@ -1,27 +1,32 @@
 ﻿services:
+  # Reverse proxy (nginx)
   reverse-proxy:
-    build: ./reverse-proxy
+    build:
+      context: .
+      dockerfile: /reverse-proxy/Dockerfile
     ports:
       - "${PORT:-8080}:80" # Railway: uses $PORT; Local: defaults to 8080
     depends_on:
       - api
       - frontend
   
+  # CustomerBackend
   api:
     build:
-      context: ./src/CustomerBackend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: src/CustomerBackend/Dockerfile
     expose:
       - "8080"
-    env_file:
-      - .env
     environment:
-      - ASPNETCORE_URLS=http://+:8080
-      - ASPNETCORE_ENVIRONMENT=Production
+      ASPNETCORE_URLS: "http://+:8080"
+      ASPNETCORE_ENVIRONMENT: "Production"
+    depends_on:
+      - mongo
 
+  # KitchenBackend
   frontend:
     build:
-      context: ./src/KitchenFrontend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: src/KitchenFrontend/Dockerfile
     expose:
       - "4173"

@@ -28,6 +28,7 @@ FirebaseApp.Create(new AppOptions() {
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddHttpClient();
 builder.Services.AddSwaggerGen();
 
 // Configure database settings from configuration.
@@ -36,9 +37,10 @@ builder.Services.Configure<DatabaseSettings>(
 
 // Register services as singletons.
 builder.Services.AddSingleton<GoogleCloudStorageService>();
-builder.Services.AddSingleton<IShoppingCartService, ShoppingCartService>();
+builder.Services.AddSingleton<CartService>();
 builder.Services.AddSingleton<MenuService>();
 builder.Services.AddSingleton<MenuItemService>();
+builder.Services.AddSingleton<UserService>();
 
 // Configure MongoDB client and database.
 builder.Services.AddSingleton<IMongoClient>(sp =>

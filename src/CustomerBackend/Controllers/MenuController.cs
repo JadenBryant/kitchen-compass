@@ -1,4 +1,5 @@
-﻿using CustomerBackend.Models;
+﻿using CustomerBackend.DTOs.Menu;
+using CustomerBackend.Models;
 using CustomerBackend.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +25,7 @@ public class MenuController : ControllerBase
         => Ok(new { items = await _service.GetItemsAsync(menuId) });
     
     [HttpPost("add_item")]
-    public async Task<IActionResult> AddItem([FromQuery] string menuId, [FromBody] CartItemDto dto)
+    public async Task<IActionResult> AddItem([FromQuery] string menuId, [FromBody] MenuItemDto dto)
     {
         var item = new MenuItem(dto.Name, dto.Price)
         {
