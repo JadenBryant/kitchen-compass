@@ -27,16 +27,22 @@ services:
       ASPNETCORE_ENVIRONMENT: "Development"
       DatabaseSettings__DatabaseName: "kc-dev"
       DatabaseSettings__ConnectionString: "mongodb://dev:pass@mongo:27017"
+      MONGO_CONNECTION_STRING: "mongodb://dev:pass@mongo:27017"
+
+      FIREBASE_API_KEY: ${FIREBASE_API_KEY}
+      FIREBASE_CREDENTIALS_B64: ${FIREBASE_CREDENTIALS_B64}
+
+
     depends_on:
       - mongo
 
   # KitchenBackend
   frontend:
     build:
-      context: ./src/KitchenFrontend
-      dockerfile: Dockerfile.local
-    expose:
-      - "4173"
+      context: .
+      dockerfile: /src/KitchenFrontend/Dockerfile
+    ports:
+      - "5173:5173"
 
   mongo:
     image: mongo:7
