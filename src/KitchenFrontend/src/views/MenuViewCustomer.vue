@@ -57,19 +57,7 @@ const menuItems = ref([
   },
 ])
 
-// Order list
-const order = ref([])
-
-// id of the item whose details are open (null = none)
 const expandedItemId = ref(null)
-
-function addToOrder(item) {
-  order.value.push(item)
-}
-
-function removeFromOrder(index) {
-  order.value.splice(index, 1)
-}
 
 function toggleDetails(item) {
   expandedItemId.value = expandedItemId.value === item.id ? null : item.id
@@ -80,7 +68,6 @@ function toggleDetails(item) {
   <div class="menu-page">
     <h2>Menu</h2>
 
-    <!-- Card list of menu items -->
     <div class="menu-grid">
       <div
         v-for="item in menuItems"
@@ -93,7 +80,6 @@ function toggleDetails(item) {
           {{ item.name }}
         </button>
 
-        <!-- Slide-down details for this card ONLY -->
         <div
           class="card-details"
           :class="{ open: expandedItemId === item.id }"
@@ -112,31 +98,8 @@ function toggleDetails(item) {
               {{ ingredient }}
             </li>
           </ul>
-
-          <button class="add-btn" @click="addToOrder(item)">
-            Add to Order
-          </button>
         </div>
       </div>
-    </div>
-
-    <!-- Current Order Section -->
-    <div class="order-summary" v-if="order.length > 0">
-      <h3>Current Order</h3>
-
-      <ul>
-        <li 
-          v-for="(item, index) in order" 
-          :key="index" 
-          class="order-item"
-        >
-          {{ item.name }} - ${{ item.price.toFixed(2) }}
-
-          <button class="remove-btn" @click="removeFromOrder(index)">
-            Remove
-          </button>
-        </li>
-      </ul>
     </div>
   </div>
 </template>
@@ -152,16 +115,14 @@ function toggleDetails(item) {
   margin-bottom: 20px;
 }
 
-/* FLEX LAYOUT so each card has independent height */
 .menu-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
-  align-items: flex-start; /* 🔹 key change: don’t stretch all cards to tallest */
+  align-items: flex-start;
 }
 
-/* Each card takes up a chunk of the row but can be different heights */
 .menu-card {
   border: 1px solid #ddd;
   border-radius: 10px;
@@ -171,7 +132,7 @@ function toggleDetails(item) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 0 1 260px;   /* width of each card */
+  flex: 0 1 260px;
 }
 
 .card-img {
@@ -197,7 +158,6 @@ function toggleDetails(item) {
   text-decoration: underline;
 }
 
-/* Hidden by default */
 .card-details {
   overflow: hidden;
   max-height: 0;
@@ -207,13 +167,12 @@ function toggleDetails(item) {
   font-size: 0.9rem;
 }
 
-/* Only the clicked card gets this class */
 .card-details.open {
   max-height: 260px;
   margin-top: 6px;
   padding-top: 4px;
   padding-bottom: 4px;
-  overflow-y: auto;   /* scroll inside if content is tall */
+  overflow-y: auto;
 }
 
 .card-description {
@@ -225,49 +184,5 @@ function toggleDetails(item) {
   margin: 0;
   padding-left: 18px;
   margin-bottom: 8px;
-}
-
-.add-btn {
-  margin-top: 4px;
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  background-color: #42b883;
-  color: white;
-  font-size: 0.9rem;
-}
-
-.add-btn:hover {
-  opacity: 0.9;
-}
-
-/* Order section */
-.order-summary {
-  margin-top: 28px;
-  padding: 16px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  background-color: #fafafa;
-}
-
-.order-item {
-  margin-bottom: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.remove-btn {
-  padding: 4px 8px;
-  background-color: #ff6b6b;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.remove-btn:hover {
-  background-color: #ff4a4a;
 }
 </style>

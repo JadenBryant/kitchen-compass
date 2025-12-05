@@ -6,6 +6,7 @@ const name = ref("")
 const email = ref("")
 const password = ref("")
 const confirmPassword = ref("")
+const role = ref("customer")
 
 const errorMessage = ref("")
 const successMessage = ref("")
@@ -13,8 +14,9 @@ const isLoading = ref(false)
 
 const router = useRouter()
 
-async function handleSignUp() {
-  console.log("Sign up clicked") // debug log
+async function handleSignUp(selectedRole) {
+  // if no role is passed, default to customer
+  role.value = selectedRole || "customer"
 
   errorMessage.value = ""
   successMessage.value = ""
@@ -40,12 +42,11 @@ async function handleSignUp() {
       body: JSON.stringify({
         email: email.value,
         password: password.value,
-        // name is ignored by backend for now; we can store it later if needed
+        role: role.value,
       }),
     })
 
     const data = await response.json()
-    console.log("register response:", data)
 
     if (!response.ok) {
       const msg =
@@ -115,13 +116,23 @@ async function handleSignUp() {
           />
         </label>
 
-        <button
-          class="signup-button"
-          :disabled="isLoading"
-          @click.prevent="handleSignUp"
-        >
-          {{ isLoading ? "Creating account..." : "Sign Up" }}
-        </button>
+        <div class="button-column">
+          <button
+            class="signup-button main"
+            :disabled="isLoading"
+            @click.prevent="handleSignUp('customer')"
+          >
+            {{ isLoading ? "Creating account..." : "Sign Up" }}
+          </button>
+
+          <button
+            class="signup-button manager"
+            :disabled="isLoading"
+            @click.prevent="handleSignUp('manager')"
+          >
+            Sign Up as Manager
+          </button>
+        </div>
 
         <p v-if="errorMessage" class="error-message">
           {{ errorMessage }}
@@ -186,6 +197,12 @@ async function handleSignUp() {
   border: 1px solid #ccc;
 }
 
+.button-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .signup-button {
   width: 100%;
   padding: 0.6rem 0.75rem;
@@ -193,6 +210,14 @@ async function handleSignUp() {
   border: 1px solid black;
   cursor: pointer;
   background: white;
+}
+
+.signup-button.main {
+  border-color: #000;
+}
+
+.signup-button.manager {
+  border-color: #e67e22;
 }
 
 .error-message {
