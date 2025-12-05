@@ -6,6 +6,7 @@ const name = ref("")
 const email = ref("")
 const password = ref("")
 const confirmPassword = ref("")
+const role = ref("customer")
 
 const errorMessage = ref("")
 const successMessage = ref("")
@@ -50,12 +51,11 @@ async function handleSignUp() {
       body: JSON.stringify({
         email: email.value,
         password: password.value,
-        // name is ignored by backend for now; we can store it later if needed
+        role: role.value,
       }),
     })
 
     const data = await response.json()
-    console.log("register response:", data)
 
     if (!response.ok) {
       const msg =
