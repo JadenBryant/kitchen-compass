@@ -13,6 +13,16 @@ const isLoading = ref(false)
 
 const router = useRouter()
 
+async function setManager() {
+  localStorage.setItem('userType', 'manager')
+  handleSignUp()
+}
+
+async function setCustomer() {
+  localStorage.setItem('userType', 'customer')
+  handleSignUp()
+}
+
 async function handleSignUp() {
   console.log("Sign up clicked") // debug log
 
@@ -59,12 +69,14 @@ async function handleSignUp() {
     setTimeout(() => {
       router.push("/login")
     }, 1500)
+    
   } catch (err) {
     console.error(err)
     errorMessage.value =
       "Network error. Make sure Docker is running and try again."
   } finally {
     isLoading.value = false
+    window.location.reload()
   }
 }
 </script>
@@ -115,13 +127,23 @@ async function handleSignUp() {
           />
         </label>
 
-        <button
-          class="signup-button"
-          :disabled="isLoading"
-          @click.prevent="handleSignUp"
-        >
-          {{ isLoading ? "Creating account..." : "Sign Up" }}
-        </button>
+        <div class="button-column">
+          <button
+            class="signup-button main"
+            :disabled="isLoading"
+            @click.prevent="setCustomer"
+          >
+            {{ isLoading ? "Creating account..." : "Sign Up" }}
+          </button>
+
+          <button
+            class="signup-button manager"
+            :disabled="isLoading"
+            @click.prevent="setManager"
+          >
+            Sign Up as Manager
+          </button>
+        </div>
 
         <p v-if="errorMessage" class="error-message">
           {{ errorMessage }}
@@ -186,6 +208,12 @@ async function handleSignUp() {
   border: 1px solid #ccc;
 }
 
+.button-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .signup-button {
   width: 100%;
   padding: 0.6rem 0.75rem;
@@ -193,6 +221,14 @@ async function handleSignUp() {
   border: 1px solid black;
   cursor: pointer;
   background: white;
+}
+
+.signup-button.main {
+  border-color: #000;
+}
+
+.signup-button.manager {
+  border-color: #e67e22;
 }
 
 .error-message {

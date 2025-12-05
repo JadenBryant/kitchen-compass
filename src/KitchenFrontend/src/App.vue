@@ -2,6 +2,16 @@
 import { RouterView, RouterLink } from 'vue-router'
 </script>
 
+<script>
+export default {
+  data() {
+    return {
+      userType: localStorage.getItem('userType')
+    }
+  }
+}
+</script>
+
 <template>
   <div class="app-container">
     <header class="navbar">
@@ -10,7 +20,10 @@ import { RouterView, RouterLink } from 'vue-router'
       <nav class="links">
         <RouterLink to="/login">Login</RouterLink>
         <RouterLink to="/signup">Sign Up</RouterLink>
-        <RouterLink to="/menu">Menu</RouterLink>
+        <RouterLink to="/customer_menu">Menu</RouterLink>
+        <li v-if="userType === 'manager'">
+          <RouterLink to="/manager_menu">Manager Menu</RouterLink>
+        </li>
       </nav>
     </header>
 
