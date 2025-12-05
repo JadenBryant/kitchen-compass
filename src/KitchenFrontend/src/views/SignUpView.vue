@@ -1,89 +1,251 @@
 <script setup>
-import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { ref } from "vue"
+import { useRouter } from "vue-router"
 
-const name = ref('')
-const email = ref('')
-const password = ref('')
-const confirmPassword = ref('')
+const name = ref("")
+const email = ref("")
+const password = ref("")
+const confirmPassword = ref("")
+const role = ref("customer")
 
-function handleSignUp() {
-  if (password.value !== confirmPassword.value) {
-    alert('Passwords do not match')
+const errorMessage = ref("")
+const successMessage = ref("")
+const isLoading = ref(false)
+
+const router = useRouter()
+
+async function setManager() {
+  localStorage.setItem('userType', 'manager')
+  handleSignUp()
+}
+
+async function setCustomer() {
+  localStorage.setItem('userType', 'customer')
+  handleSignUp()
+}
+
+async function handleSignUp() {
+  console.log("Sign up clicked") // debug log
+
+  errorMessage.value = ""
+  successMessage.value = ""
+
+  if (!name.value || !email.value || !password.value || !confirmPassword.value) {
+    errorMessage.value = "Please fill out all fields."
     return
   }
 
-  console.log('Sign up:', {
-    name: name.value,
-    email: email.value,
-    password: password.value,
-  })
+  if (password.value !== confirmPassword.value) {
+    errorMessage.value = "Passwords do not match."
+    return
+  }
 
-  // TODO: call backend API, e.g. POST /auth/register
+  isLoading.value = true
+
+  try {
+    const response = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+        role: role.value,
+      }),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      const msg =
+        data.error?.message || "Sign up failed. Please check your inputs."
+      errorMessage.value = msg
+      return
+    }
+
+    successMessage.value = "Account created! Redirecting to login..."
+
+    setTimeout(() => {
+      router.push("/login")
+    }, 1500)
+    
+  } catch (err) {
+    console.error(err)
+    errorMessage.value =
+      "Network error. Make sure Docker is running and try again."
+  } finally {
+    isLoading.value = false
+    window.location.reload()
+  }
 }
 </script>
 
 <template>
   <div class="signup-page">
-    <h2>Create an Account</h2>
+    <h1 class="site-title">Kitchen Compass</h1>
 
-    <form @submit.prevent="handleSignUp" class="signup-form">
-      <label>
-        Name
-        <input v-model="name" type="text" required />
-      </label>
+    <div class="signup-card">
+      <h2 class="signup-title">Create an Account</h2>
 
-      <label>
-        Email
-        <input v-model="email" type="email" required />
-      </label>
+      <div class="signup-form">
+        <label class="field">
+          <span>Name</span>
+          <input
+            v-model="name"
+            type="text"
+            placeholder="Your name"
+            required
+          />
+        </label>
 
-      <label>
-        Password
-        <input v-model="password" type="password" required />
-      </label>
+        <label class="field">
+          <span>Email</span>
+          <input
+            v-model="email"
+            type="email"
+            placeholder="you@example.com"
+            required
+          />
+        </label>
 
-      <label>
-        Confirm Password
-        <input v-model="confirmPassword" type="password" required />
-      </label>
+        <label class="field">
+          <span>Password</span>
+          <input
+            v-model="password"
+            type="password"
+            required
+          />
+        </label>
 
-      <button type="submit">Sign Up</button>
-    </form>
+        <label class="field">
+          <span>Confirm Password</span>
+          <input
+            v-model="confirmPassword"
+            type="password"
+            required
+          />
+        </label>
 
-    <p style="margin-top: 12px;">
-      Already have an account?
-      <RouterLink to="/login">Log In</RouterLink>
-    </p>
+        <div class="button-column">
+          <button
+            class="signup-button main"
+            :disabled="isLoading"
+            @click.prevent="setCustomer"
+          >
+            {{ isLoading ? "Creating account..." : "Sign Up" }}
+          </button>
+
+          <button
+            class="signup-button manager"
+            :disabled="isLoading"
+            @click.prevent="setManager"
+          >
+            Sign Up as Manager
+          </button>
+        </div>
+
+        <p v-if="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </p>
+
+        <p v-if="successMessage" class="success-message">
+          {{ successMessage }}
+        </p>
+
+        <p class="login-link">
+          Already have an account?
+          <router-link to="/login">Log In</router-link>
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .signup-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 4rem;
+}
+
+.site-title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.signup-card {
   max-width: 400px;
-  margin: 80px auto;
-  padding: 24px;
+  width: 100%;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   background: white;
+}
+
+.signup-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
 .signup-form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 1rem;
 }
 
-input {
+.field span {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.field input {
   width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-  box-sizing: border-box;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
-button {
-  margin-top: 8px;
-  padding: 8px;
+.button-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.signup-button {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid black;
   cursor: pointer;
+  background: white;
+}
+
+.signup-button.main {
+  border-color: #000;
+}
+
+.signup-button.manager {
+  border-color: #e67e22;
+}
+
+.error-message {
+  color: #c0392b;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.success-message {
+  color: #2ecc71;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.login-link {
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 0.75rem;
 }
 </style>
