@@ -39,10 +39,10 @@ services:
   # KitchenBackend
   frontend:
     build:
-      context: .
-      dockerfile: /src/KitchenFrontend/Dockerfile
+      context: ./src/KitchenFrontend
+      dockerfile: Dockerfile.local
     ports:
-      - "5173:5173"
+      - "4173:4173"
 
   mongo:
     image: mongo:7

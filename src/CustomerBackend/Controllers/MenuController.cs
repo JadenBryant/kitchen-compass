@@ -1,55 +1,67 @@
-﻿using CustomerBackend.DTOs.Menu;
-using CustomerBackend.Models;
-using CustomerBackend.Services;
+﻿using CustomerBackend.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CustomerBackend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class MenuController : ControllerBase
-{
-    /// <summary>
-    /// Field for the menu service.
-    /// </summary>
+public class MenuController : ControllerBase {
     private readonly MenuService _service;
-    
-    /// <summary>
-    /// Constructor for the menu controller.
-    /// </summary>
-    /// <param name="service">The menu service.</param>
+
     public MenuController(MenuService service) => _service = service;
-    
+
+    [HttpPost("create_menu")]
+    public async Task<IActionResult> CreateMenu([FromBody] string menuName) {
+        var menu = await _service.CreateMenuAsync(menuName);
+        return Ok(new {
+            id = menu.Id, name = menu.MenuName
+        });
+    }
+
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] string menuId)
-        => Ok(new { items = await _service.GetItemsAsync(menuId) });
-    
+    public async Task<IActionResult> Get([FromQuery] string menuId) {
+        var menu = await _service.GetMenuAsync(menuId);
+        if (menu == null)
+            return NotFound();
+
+        return Ok(new {
+            menuName = menu.MenuName, items = menu.Items
+        });
+    }
+
     [HttpPost("add_item")]
-    public async Task<IActionResult> AddItem([FromQuery] string menuId, [FromBody] MenuItemDto dto)
-    {
-        var item = new MenuItem(dto.Name, dto.Price)
-        {
-            Id = dto.Id,
-            Description = dto.Description ?? string.Empty,
-            Ingredients = dto.Ingredients ?? string.Empty,
-            CalorieCount = dto.CalorieCount ?? 0
-        };
-    
-        await _service.AddItemAsync(menuId, item);
-        return Ok(new { items = await _service.GetItemsAsync(menuId) });
+    public async Task<IActionResult> AddItem([FromQuery] string menuId, [FromQuery] Guid itemId) {
+        await _service.AddItemAsync(menuId, itemId);
+        var menu = await _service.GetMenuAsync(menuId);
+        if (menu == null)
+            return NotFound();
+
+        return Ok(new {
+            menuName = menu.MenuName, items = menu.Items
+        });
     }
-    
+
     [HttpDelete("remove_item")]
-    public async Task<IActionResult> RemoveItem([FromQuery] string menuId, [FromQuery] Guid itemId)
-    {
+    public async Task<IActionResult> RemoveItem([FromQuery] string menuId, [FromQuery] Guid itemId) {
         await _service.RemoveItemAsync(menuId, itemId);
-        return Ok(new { items = await _service.GetItemsAsync(menuId) });
+        var menu = await _service.GetMenuAsync(menuId);
+        if (menu == null)
+            return NotFound();
+
+        return Ok(new {
+            menuName = menu.MenuName, items = menu.Items
+        });
     }
-    
-    [HttpPut("edit_item_price")]
-    public async Task<IActionResult> EditItemPrice([FromQuery] string menuId, [FromQuery] Guid itemId, [FromQuery] decimal price)
-    {
-        await _service.EditItemPriceAsync(menuId, itemId, price);
-        return Ok(new { items = await _service.GetItemsAsync(menuId) });
+
+    [HttpPut("edit_menu_name")]
+    public async Task<IActionResult> EditMenuName([FromQuery] string menuId, [FromBody] string newName) {
+        var success = await _service.UpdateMenuNameAsync(menuId, newName);
+        if (!success)
+            return NotFound();
+
+        var menu = await _service.GetMenuAsync(menuId);
+        return Ok(new {
+            menuName = menu.MenuName, items = menu.Items
+        });
     }
 }
