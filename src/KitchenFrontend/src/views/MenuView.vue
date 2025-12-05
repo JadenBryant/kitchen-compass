@@ -37,6 +37,11 @@ function goToAddPage() {
   router.push('/menu/new')
 }
 
+// Navigate to OrderEdit page (using the item's id)
+function editItem(id) {
+  router.push({ name: 'order-edit', params: { id } })
+}
+
 // Toggle active/inactive status
 function toggleActive(item) {
   item.active = !item.active
@@ -88,7 +93,10 @@ function deleteItem(id) {
           </td>
 
           <td class="action-buttons">
-            <button class="edit-btn">
+            <button
+              class="edit-btn"
+              @click="editItem(item.id)"
+            >
               Edit
             </button>
             <button

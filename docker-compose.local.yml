@@ -22,6 +22,11 @@ services:
       ASPNETCORE_URLS: "http://+:8080"
       ASPNETCORE_ENVIRONMENT: "Development"
       MONGO_CONNECTION_STRING: "mongodb://dev:pass@mongo:27017"
+
+      FIREBASE_API_KEY: ${FIREBASE_API_KEY}
+      FIREBASE_CREDENTIALS_B64: ${FIREBASE_CREDENTIALS_B64}
+
+
     depends_on:
       - mongo
 
@@ -29,8 +34,8 @@ services:
     build:
       context: .
       dockerfile: /src/KitchenFrontend/Dockerfile
-    expose:
-      - "4173"
+    ports:
+      - "5173:5173"
 
   mongo:
     image: mongo:7
