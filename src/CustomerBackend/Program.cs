@@ -41,6 +41,7 @@ builder.Services.AddSingleton<CartService>();
 builder.Services.AddSingleton<MenuService>();
 builder.Services.AddSingleton<MenuItemService>();
 builder.Services.AddSingleton<UserService>();
+builder.Services.AddSingleton<ConfigService>();
 
 // Configure MongoDB client and database.
 builder.Services.AddSingleton<IMongoClient>(sp =>

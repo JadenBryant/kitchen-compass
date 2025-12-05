@@ -10,6 +10,7 @@ const selectedMenuItems = ref([])
 const newMenuName = ref('')
 const showCreateDialog = ref(false)
 const showItemsDialog = ref(false)
+const activeMenuId = ref(null)
 
 const API_BASE = 'http://localhost:8080/api'
 
@@ -138,9 +139,40 @@ async function editMenuName(menu) {
   }
 }
 
+// Fetch active menu ID
+async function fetchActiveMenuId() {
+  try {
+    const response = await fetch(`${API_BASE}/config/active_menu_id`)
+    if (response.ok) {
+      const data = await response.json()
+      activeMenuId.value = data.value
+    }
+  } catch (error) {
+    console.error('Failed to fetch active menu:', error)
+  }
+}
+
+// Set active menu
+async function setActiveMenu(menuId) {
+  try {
+    const response = await fetch(
+        `${API_BASE}/menu/set_active?menuId=${menuId}`,
+        { method: 'POST' }
+    )
+
+    if (response.ok) {
+      activeMenuId.value = menuId
+    }
+  } catch (error) {
+    console.error('Failed to set active menu:', error)
+  }
+}
+
+// Update onMounted
 onMounted(async () => {
   await fetchMenus()
   await fetchAllMenuItems()
+  await fetchActiveMenuId()
 })
 </script>
 
@@ -157,8 +189,17 @@ onMounted(async () => {
       <div v-for="menu in menus" :key="menu.id" class="menu-card">
         <h3>{{ menu.name }}</h3>
         <p class="item-count">{{ menu.items?.length || 0 }} items</p>
-        
+
         <div class="menu-actions">
+          <button
+              v-if="menu.id !== activeMenuId"
+              class="set-active-btn"
+              @click="setActiveMenu(menu.id)"
+          >
+            Set Active
+          </button>
+          <span v-else class="active-badge">Active Menu</span>
+
           <button class="manage-btn" @click="manageMenuItems(menu)">
             Manage Items
           </button>
@@ -418,5 +459,25 @@ onMounted(async () => {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.set-active-btn {
+  background-color: #28a745;
+  color: white;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.active-badge {
+  background-color: #28a745;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  margin-bottom: 8px;
 }
 </style>

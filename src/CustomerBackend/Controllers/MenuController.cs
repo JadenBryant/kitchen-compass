@@ -7,8 +7,13 @@ namespace CustomerBackend.Controllers;
 [Route("api/[controller]")]
 public class MenuController : ControllerBase {
     private readonly MenuService _service;
-
-    public MenuController(MenuService service) => _service = service;
+    private readonly ConfigService _configService;
+    
+    public MenuController(MenuService service, ConfigService configService)
+    {
+        _service = service;
+        _configService = configService;
+    }
 
     [HttpPost("create_menu")]
     public async Task<IActionResult> CreateMenu([FromBody] string menuName) {
@@ -28,10 +33,9 @@ public class MenuController : ControllerBase {
             menuName = menu.MenuName, items = menu.Items
         });
     }
-    
+
     [HttpGet("get_all")]
-    public async Task<IActionResult> GetAll()
-    {
+    public async Task<IActionResult> GetAll() {
         var menus = await _service.GetAllMenusAsync();
         return Ok(menus.Select(m => new {
             id = m.Id,
@@ -73,6 +77,34 @@ public class MenuController : ControllerBase {
         var menu = await _service.GetMenuAsync(menuId);
         return Ok(new {
             menuName = menu.MenuName, items = menu.Items
+        });
+    }
+
+    [HttpPost("set_active")]
+    public async Task<IActionResult> SetActiveMenu([FromQuery] string menuId) {
+        var menu = await _service.GetMenuAsync(menuId);
+        if (menu == null)
+            return NotFound();
+
+        await _configService.SetValueAsync("active_menu_id", menuId);
+        return Ok(new { message = "Active menu updated", menuId });
+    }
+    
+    [HttpGet("active")]
+    public async Task<IActionResult> GetActiveMenu()
+    {
+        var activeMenuId = await _configService.GetValueAsync("active_menu_id");
+        if (activeMenuId == null)
+            return NotFound(new { message = "No active menu set" });
+    
+        var menu = await _service.GetMenuAsync(activeMenuId);
+        if (menu == null)
+            return NotFound(new { message = "Active menu not found" });
+    
+        return Ok(new {
+            id = menu.Id,
+            name = menu.MenuName,
+            items = menu.Items
         });
     }
 }
