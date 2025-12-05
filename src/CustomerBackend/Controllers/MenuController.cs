@@ -28,6 +28,17 @@ public class MenuController : ControllerBase {
             menuName = menu.MenuName, items = menu.Items
         });
     }
+    
+    [HttpGet("get_all")]
+    public async Task<IActionResult> GetAll()
+    {
+        var menus = await _service.GetAllMenusAsync();
+        return Ok(menus.Select(m => new {
+            id = m.Id,
+            name = m.MenuName,
+            items = m.Items
+        }));
+    }
 
     [HttpPost("add_item")]
     public async Task<IActionResult> AddItem([FromQuery] string menuId, [FromQuery] Guid itemId) {

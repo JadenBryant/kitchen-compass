@@ -50,9 +50,12 @@ public class MenuService {
         return result.ModifiedCount > 0;
     }
 
-
     public async Task<List<Guid>> GetItemsAsync(string menuId) {
         var menu = await GetMenuAsync(menuId);
         return menu?.Items ?? new List<Guid>();
+    }
+
+    public async Task<List<Menu>> GetAllMenusAsync() {
+        return await _menuCollection.Find(_ => true).ToListAsync();
     }
 }
